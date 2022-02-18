@@ -17,43 +17,54 @@ class ExpenseController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'createdDate' => 'date',
-            'receiptPath' => 'string',
-            'expenseCost' => 'required|numeric',
-            'expenseFor' => 'string',
-            'otherExpense' => 'string',
-            'rentalAgency' => 'string',
-            'carClass' => 'string',
-            'ticketNo' => 'string',
-            'airline' => 'string',
-            'daysInHotel' => 'integer',
-            'hotelName' => 'string',
-            'expenseType_id' => 'required|exists:expense_types,id'
-        ]);
+        try {
+            $fields =  $request->validate([
+                'createdDate' => 'date',
+                'receiptPath' => 'string',
+                'expenseCost' => 'required|numeric',
+                'expenseFor' => 'string',
+                'otherExpense' => 'string',
+                'rentalAgency' => 'string',
+                'carClass' => 'string',
+                'ticketNo' => 'string',
+                'airline' => 'string',
+                'daysInHotel' => 'integer',
+                'hotelName' => 'string',
+                'expenseType_id' => 'required|exists:expense_types,id'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'msg'    => 'Error',
+                'errors' => $th->errors(),
+            ], 422);
+        }
+      
 
+     
         $user_id = auth()->user()->id;
 
-        try {
+
+       
             // Validate the value...
-            return Expense::create([
+            $expense =  Expense::create([
                 'user_id' => $user_id,
-                'createdDate' => $request->createdDate,
-                'receiptPath' => $request->receiptPath,
-                'expenseCost' => $request->expenseCost,
-                'expenseFor' => $request->expenseFor,
-                'otherExpense' => $request->otherExpense,
-                'rentalAgency' => $request->rentalAgency,
-                'carClass' => $request->carClass,
-                'ticketNo' => $request->ticketNo,
-                'airline' => $request->airline,
-                'daysInHotel' => $request->daysInHotel,
-                'hotelName' => $request->hotelName,
-                'expenseType_id' => $request->expenseType_id,
+                'createdDate' => $request->get('createdDate'),
+                'receiptPath' =>  $request->get('receiptPath'),
+                'expenseCost' => $request->get('expenseCost'),
+                'expenseFor' => $request->get('expenseFor'),
+                'otherExpense' => $request->get('otherExpense'),
+                'rentalAgency' => $request->get('rentalAgency'),
+                'carClass' => $request->get('carClass'),
+                'ticketNo' => $request->get('ticketNo'),
+                'airline' => $request->get('airline'),
+                'daysInHotel' => $request->get('daysInHotel'),
+                'hotelName' => $request->get('hotelName'),
+                'expenseType_id' => $request->get('expenseType_id'),
             ]);
-        } catch (Throwable $e) {
-            return $e;
-        }
+
+        return $expense;
+      
 
     }
 
@@ -65,7 +76,9 @@ class ExpenseController extends Controller
     public function update(Request $request, $id)
     {
 
-        $request->validate([
+
+        try {
+            $fields =  $request->validate([
             'createdDate' => 'date',
             'receiptPath' => 'string',
             'expenseCost' => 'numeric',
@@ -78,7 +91,14 @@ class ExpenseController extends Controller
             'daysInHotel' => 'integer',
             'hotelName' => 'string',
             'expenseType_id' => 'exists:expense_types,id'
-        ]);
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => 'error',
+                'msg'    => 'Error',
+                'errors' => $th->errors(),
+            ], 422);
+        }
 
 
         try {
