@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\ExpenseTypeController;
+use App\Http\Controllers\API\ExpenseController;
 use App\Http\Controllers\API\ForgotPasswordController;
 
 /*
@@ -32,12 +33,20 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/check_user', [AuthController::class, 'checkUser']);
 
-    // Expense
+    // Expense Type
     Route::get('/expense_types', [ExpenseTypeController::class, 'index']);
     Route::get('/expense_types/{id}', [ExpenseTypeController::class, 'show']);
     Route::post('/expense_types', [ExpenseTypeController::class, 'store'])->middleware('is_admin');
     Route::put('/expense_types/{id}', [ExpenseTypeController::class, 'update'])->middleware('is_admin');
     Route::delete('/expense_types/{id}', [ExpenseTypeController::class, 'destroy'])->middleware('is_admin');
+
+
+    // Expense
+    Route::get('/expenses', [ExpenseController::class, 'index']);
+    Route::get('/expenses/{id}', [ExpenseController::class, 'show']);
+    Route::post('/expenses', [ExpenseController::class, 'store']);
+    Route::put('/expenses/{id}', [ExpenseController::class, 'update']);
+    Route::delete('/expenses/{id}', [ExpenseController::class, 'destroy']);
 
 });
 
