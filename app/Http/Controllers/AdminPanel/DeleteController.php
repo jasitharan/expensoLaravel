@@ -4,13 +4,22 @@ namespace App\Http\Controllers\AdminPanel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\Comment;
+use App\Models\User;
 use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class DeleteController extends Controller
 {
+
+    // Delete User
+    public function deleteUser(Request $request)
+    {
+        User::destroy($request->id);
+
+        return redirect('users')->with('success', 'User Deleted Successfully');
+    }
+
     public function deleteNews(Request $request)
     {
         $news = News::find($request->id);
@@ -46,10 +55,5 @@ class DeleteController extends Controller
         return redirect('category')->with('success', 'Category Deleted Successfully');
     }
 
-    public function deleteComment(Request $request)
-    {
-        Comment::destroy($request->id);
-
-        return redirect('comments')->with('success', 'Comment Deleted Successfully');
-    }
+   
 }

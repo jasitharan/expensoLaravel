@@ -14,9 +14,9 @@ class ShowEntrySeeder extends Seeder
     public function run()
     {
         \App\Models\ShowEntry::create([
-            "category" => 10,
-            "news" => 10,
-            "comment" => 10
+            "expense_types" => 10,
+            "expenses" => 10,
+            "users" => 10
         ]);
     }
 }

@@ -14,8 +14,8 @@
                     <i class='bx bxs-user mb-3' style="font-size:32px"></i>
             
                 
-                    <h5 class="card-title">Total Users</h5>
-              <p class="card-text">Registerd User
+                    <h5 class="card-title">Total Employee</h5>
+              <p class="card-text">Registerd Employee
             </p>
             <h2 class="card-title">{{ $total_users }}</h2>
               
@@ -27,13 +27,13 @@
         <div class="card shadow-sm p-3 mb-5 bg-info rounded text-dark bg-info mb-3" style="max-width: 18rem;">
             <div class="card-body">
                
-                    <i class='bx bxs-news mb-3' style="font-size:32px"></i>
+                    <i class='bx bx-money mb-3' style="font-size:32px"></i>
               
                 
-                    <h5 class="card-title">Total News</h5>
-              <p class="card-text">published into App
+                    <h5 class="card-title">Total Expenses</h5>
+              <p class="card-text">Created Via Employee
             </p>
-            <h2 class="card-title">{{ $total_news }}</h2>
+            <h2 class="card-title">{{ $total_expenses }}</h2>
               
             </div>
           </div>
@@ -44,33 +44,19 @@
         <div class="card shadow-sm p-3 mb-5 bg-info rounded text-dark bg-info mb-3" style="max-width: 18rem;">
             <div class="card-body">
                
-                    <i class='bx bxs-folder mb-3' style="font-size:32px"></i>
+                    <i class='bx bxs-wallet mb-3' style="font-size:32px"></i>
               
                 
-                    <h5 class="card-title">Total Categories</h5>
-              <p class="card-text">Active Categories
+                    <h5 class="card-title">Total ExpenseTypes</h5>
+              <p class="card-text">Active ExpenseTypes
             </p>
-            <h2 class="card-title">{{ $total_categories }}</h2>
+            <h2 class="card-title">{{ $total_expenseTypes }}</h2>
               
             </div>
           </div>
     </div>
     
-    <div class="cardview">
-        <div class="card shadow-sm p-3 mb-5 bg-info rounded text-dark bg-info mb-3" style="max-width: 18rem;">
-            <div class="card-body">
-               
-                    <i class='bx bxs-comment-detail mb-3' style="font-size:32px"></i>
-              
-                
-                    <h5 class="card-title">Total Comments</h5>
-              <p class="card-text">posted at
-            </p>
-            <h2 class="card-title">{{ $total_comments }}</h2>
-              
-            </div>
-          </div>
-    </div>
+   
     
   
    
@@ -78,28 +64,30 @@
 
 
 <div class="card shadow-sm p-3 mb-5 bg-white rounded">
-    <h5 class="card-header">Recent 5 News</h5>
+    <h5 class="card-header">Recent 5 Expenses</h5>
     <div class="card-body">
         <table class="table table-striped table-valign-middle">
             <thead>
                 <tr>
-                    <th>Image</th>
-                    <th>News Title</th>
+                    <th>Employee</th>
+                    <th>Expense For</th>
+                    <th>Expense Cost</th>
                     <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 
-                @if (count($news) > 0)
-                   @foreach ($news as $n)
+                @if (count($expenses) > 0)
+                   @foreach ($expenses as $e)
                    <tr class="align-middle">
                     <td>
-                        <img class="rounded-circle" alt="50x50" width="60px" height="60px" src="{{ $n->url_image  }}" data-holder-rendered="true">
+                    {{ $e->user_name }}
                     </td>
-                    <td>{{ $n->title }}</td>
+                    <td>{{ $e->expenseFor }}</td>
+                    <td>{{ $e->expenseCost }}</td>
                     <td>
                         
-                        <a href="{{ url('news/'.$n->id.'/edit') }}" class="btn btn-link text-center">
+                        <a href="{{ url('news/'.$e->id.'/edit') }}" class="btn btn-link text-center">
                             <i class="fa fa-edit"></i>
                         </a>
                       

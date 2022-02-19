@@ -42,14 +42,12 @@
                 <div class="nav_list"> 
                     <a href="{{ url('dashboard') }}" class="nav_link @yield('dashboard-active')"> <i class='bx bx-grid-alt nav_icon'></i> <span class="nav_name">Dashboard</span> </a> 
                     
-                    <a href="{{ url('news?sort=created_at&direction=desc') }}" class="nav_link @yield('news-active')"> <i class='bx bx-news nav_icon'></i> <span class="nav_name">News</span> </a>
+                    <a href="{{ url('users?sort=created_at&direction=desc') }}" class="nav_link @yield('users-active')"> <i class='bx bx-user nav_icon'></i> <span class="nav_name">Users</span> </a>
                     
-                    <a href="{{ url('category?sort=created_at&direction=desc') }}" class="nav_link @yield('category-active')"><i class='bx bx-folder nav_icon'></i> <span class="nav_name">Categories</span> </a> 
+                    <a href="{{ url('expenses?sort=created_at&direction=desc') }}" class="nav_link @yield('category-active')"><i class='bx bx-money nav_icon'></i> <span class="nav_name">Expenses</span> </a> 
                     
-                    <a href="{{ url('comments?sort=created_at&direction=desc') }}" class="nav_link @yield('comments-active')"> <i class='bx bx-comment-detail nav_icon'></i> <span class="nav_name">Comments</span> </a> 
-                    
-                    <a href="{{ url('notifications') }}" class="nav_link @yield('notifications-active')"> <i class='bx bx-bell nav_icon'></i> <span class="nav_name">Notifications</span> </a> 
-                    
+                    <a href="{{ url('expense_types?sort=created_at&direction=desc') }}" class="nav_link @yield('comments-active')"> <i class='bx bx-wallet nav_icon'></i> <span class="nav_name">ExpenseTypes</span> </a> 
+                                        
                     <a href="{{ url('settings/global') }}" class="nav_link @yield('settings-active')"> <i class='bx bx-cog nav_icon'></i> <span class="nav_name">Settings</span> </a>
             
                 </div>

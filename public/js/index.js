@@ -61,8 +61,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
          document.forms["setting-notification-form"].submit(); 
     }       
     
-    function createNews() {
-       document.forms['news-create-form'].submit();
+    function createUser() {
+       document.forms['users-create-form'].submit();
+    }
+
+    function editUser() {
+      document.forms['users-edit-form'].submit();
     }
     
     function editNews() {
@@ -74,9 +78,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.forms['category-create-form'].submit();
  }
  
- function editComment() {
-  document.forms['comment-edit-form'].submit();
-}
+
  
  function editCategory() {
   document.forms['category-edit-form'].submit();

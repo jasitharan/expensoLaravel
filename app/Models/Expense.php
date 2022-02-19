@@ -24,4 +24,13 @@ class Expense extends Model
         'expenseType_id',
         'user_id'
     ];
+
+    protected $appends = ['user_name'];
+
+     //define accessor
+     public function getUsernameAttribute()
+     {
+         return User::find($this->user_id)->name;
+     }
+
 }

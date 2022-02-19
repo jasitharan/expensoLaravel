@@ -4,8 +4,8 @@ namespace App\Http\Controllers\AdminPanel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\Comment;
-use App\Models\News;
+use App\Models\ExpenseType;
+use App\Models\Expense;
 use App\Models\Setting;
 use App\Models\ShowEntry;
 use App\Models\User;
@@ -16,29 +16,64 @@ class ViewController extends Controller
 
     public function getDashBoard()
     {
-        // $news = News::all();
-        // $sorted = $news->sortByDesc('created_at',)->take(5);
-        // $data = array(
-        //     'news' => $sorted,
-        //     'total_news' => count($news),
-        //     'total_categories' => count(Category::all()),
-        //     'total_comments' => count(Comment::all()),
-        //     'total_users' => count(User::all()->where('role', 'user'))
-        // );
+         $expenses = Expense::all();
+         $sorted = $expenses->sortByDesc('created_at',)->take(5);
         $data = array(
-            'news' => [],
-            'total_news' => 10,
-            'total_categories' => 10,
-            'total_comments' => 10,
-            'total_users' => count(User::all()->where('role', 'user'))
+            'expenses' => $sorted,
+            'total_expenses' => count($expenses),
+            'total_expenseTypes' => count(ExpenseType::all()),
+            'total_users' => count(User::all()->where('role', 'employee'))
         );
+    
         return view('dashboard')->with($data);
     }
 
+      // User
 
-    // Category
+      public function getUserList(Request $request)
+      {
+  
+          $limit = ShowEntry::first()->users;
 
-    public function getCategoryList(Request $request)
+          $users = User::where('id', '!=', request()->user()->id);
+
+          $users = $users->sortable(['name', 'created_at'])->paginate($limit);
+
+  
+          if ($request->hasAny('search')) {
+              $users =  User::where('name', 'like', '%' . $request->input('search') . '%')->paginate($limit);
+          }
+
+      
+  
+          $data = array(
+              'users' => $users,
+              'limit' => $limit
+          );
+          return view('users.get_users')->with($data);
+      }
+  
+      public function getCreateUser()
+      {
+          $data = array(
+              'users' => User::all()
+          );
+          return view('users.create_users')->with($data);
+      }
+  
+      public function getEditUser(Request $request)
+      {
+          $data = array(
+              'user' => User::where('id', $request->id)->first(),
+          );;
+  
+          return view('users.edit_users')->with($data);
+      }
+
+
+    // Expense Type
+
+    public function getExpenseTypeList(Request $request)
     {
 
         $limit = ShowEntry::first()->category;
@@ -117,57 +152,5 @@ class ViewController extends Controller
         return view('news.edit_news')->with($data);
     }
 
-    // Comments
-
-    public function getCommentList(Request $request)
-    {
-
-        $limit = ShowEntry::first()->comment;
-
-
-        $comments = Comment::sortable([
-            'comment', 'user_id',
-            'news_id', 'created_at'
-        ])->paginate($limit);
-
-
-        foreach ($comments as $comment) {
-            $comment->user_name = User::find($comment->user_id)->name;
-            $comment->news_title = News::find($comment->news_id)->title;
-        }
-
-        if ($request->hasAny('search')) {
-            $comments =  Comment::where('comment', 'like', '%' . $request->input('search') . '%')->paginate($limit);
-        }
-
-
-        $data = array(
-            'comments' => $comments,
-            'limit' => $limit
-        );
-        return view('comments.get_comment')->with($data);
-    }
-
-    public function getCreateComment()
-    {
-        $data = array(
-            'users' => User::all()->where('role', 'user'),
-            'news' => News::all(),
-
-        );
-
-        return view('comments.create_comment')->with($data);
-    }
-
-    public function getEditComment(Request $request)
-    {
-
-        $data = array(
-            'comment' => Comment::find($request->id),
-            'users' => User::all()->where('role', 'user'),
-            'news' => News::all(),
-
-        );
-        return view('comments.edit_comment')->with($data);
-    }
+    
 }

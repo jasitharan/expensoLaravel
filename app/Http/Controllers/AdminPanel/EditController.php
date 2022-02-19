@@ -4,7 +4,7 @@ namespace App\Http\Controllers\AdminPanel;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\Comment;
+use App\Models\User;
 use App\Models\News;
 use App\Models\ShowEntry;
 use Illuminate\Http\Request;
@@ -13,6 +13,31 @@ use Throwable;
 
 class EditController extends Controller
 {
+
+    // User
+    public function editUser(Request $request, $id)
+    {
+        $fields = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email,'. $id,
+            'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000'
+        ]);
+
+        try {
+            $user = User::find($id);
+            $user->update([
+                'name' => $fields['name'],
+                'email' => $fields['email'],
+        //        'url_image' => Storage::url($path)
+            ]);
+        } catch (Throwable $e) {
+            echo $e;
+        }
+
+        return redirect('users/' . $request->id . '/edit')->with('success', 'Updated Successfully');
+    }
+
+
     public function editNews(Request $request)
     {
         $news = News::find($request->id);
@@ -111,23 +136,7 @@ class EditController extends Controller
         return redirect('category/' . $request->name . '/edit')->with('success', 'Updated Successfully');
     }
 
-    public function editComment(Request $request, $id)
-    {
-        $request->validate([
-            'comment' => 'required',
-            'news_id' => 'required',
-            'user_id' => 'required'
-        ]);
 
-        try {
-            $comment = Comment::find($id);
-            $comment->update($request->all());
-        } catch (Throwable $e) {
-            echo $e;
-        }
-
-        return redirect('comments/' . $request->id . '/edit')->with('success', 'Updated Successfully');
-    }
 
     public function editShowEntry(Request $request)
     {

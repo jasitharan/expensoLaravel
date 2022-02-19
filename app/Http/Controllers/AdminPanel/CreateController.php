@@ -15,6 +15,35 @@ use Throwable;
 class CreateController extends Controller
 {
 
+    // User
+    public function createUser(Request $request)
+    {
+
+        $fields = $request->validate([
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|string',
+            'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000'
+        ]);
+
+        if ($request->hasFile('url_image')) {
+            // Upload image
+            $path = Storage::put('images/user_images', $request->url_image, 'public');
+        } else {
+            $path = 'images/user_images/noimage.jpg';
+        }
+
+        $user = User::create([
+            'name' => $fields['name'],
+            'email' => $fields['email'],
+            'password' => bcrypt($fields['password']),
+            'url_image' => Storage::url($path)
+        ]);
+
+
+        return redirect('/users/create')->with('success', 'User Created');
+    }
+
     public function createNews(Request $request)
     {
 
@@ -74,23 +103,5 @@ class CreateController extends Controller
     }
 
 
-    public function createComment(Request $request)
-    {
-
-
-        $request->validate([
-            'comment' => 'required',
-            'news_id' => 'required',
-            'user_id' => 'required'
-        ]);
-        $comment = new Comment();
-        $comment->news_id = $request->input('news_id');
-        $comment->user_id = $request->input('user_id');
-        $comment->comment = $request->input('comment');
-        $comment->save();
-
-
-
-        return redirect('/comments/create')->with('success', 'Comment Created');
-    }
+   
 }
