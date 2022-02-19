@@ -45,6 +45,10 @@ Route::group(['middleware' => 'check_admin'], function () {
     Route::get('/expense_types/create', [ViewController::class, 'getCreateCategory']);
     Route::get('/expense_types/{name}/edit', [ViewController::class, 'getEditCategory']);
 
+    
+
+    Route::patch('/show_entries', [EditController::class, 'editShowEntry']);
+
     //Settings
     Route::get('/settings/notification', [SettingsController::class, 'getNotificationSetting']);
     Route::get('/settings/global', [SettingsController::class, 'getGlobalSetting']);

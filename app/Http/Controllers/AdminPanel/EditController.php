@@ -146,9 +146,9 @@ class EditController extends Controller
 
 
         $request->validate([
-            'news' => 'integer',
-            'comment' => 'integer',
-            'category' => 'integer'
+            'expense_types' => 'integer',
+            'expenses' => 'integer',
+            'users' => 'integer'
         ]);
 
 
@@ -159,22 +159,22 @@ class EditController extends Controller
 
         $show_entry->update(
             [
-                'news' => $request->input('news-limit') != null ? intval($request->input('news-limit')) : $show_entry->news,
-                'comment' => $request->input('comment-limit') != null ? intval($request->input('comment-limit')) : $show_entry->comment,
-                'category' => $request->input('category-limit') != null ? intval($request->input('category-limit')) : $show_entry->category,
+                'expense_types' => $request->input('expense_types-limit') != null ? intval($request->input('expense_types-limit')) : $show_entry->expense_types,
+                'expenses' => $request->input('expenses-limit') != null ? intval($request->input('expenses-limit')) : $show_entry->expenses,
+                'users' => $request->input('users-limit') != null ? intval($request->input('users-limit')) : $show_entry->users,
             ]
         );
 
-        if ($request->input('news-limit') != null) {
-            return redirect('news');
+        if ($request->input('expense_types-limit') != null) {
+            return redirect('expense_types');
         }
 
-        if ($request->input('comment-limit') != null) {
-            return redirect('comments');
+        if ($request->input('expenses-limit') != null) {
+            return redirect('expenses');
         }
 
-        if ($request->input('category-limit') != null) {
-            return redirect('category');
+        if ($request->input('users-limit') != null) {
+            return redirect('users');
         }
     }
 }

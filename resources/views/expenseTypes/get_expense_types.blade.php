@@ -18,7 +18,7 @@
             <form action="{{ url('show_entries') }}" method="post" name="show-entries-form">
               <input name="_method" type="hidden" value="patch">
               @csrf
-              <select class="form-select" aria-label="Default select example" id='category-limit' name='category-limit' onchange="javascript: submitEntries()">
+              <select class="form-select" aria-label="Default select example" id='expense_types-limit' name='expense_types-limit' onchange="javascript: submitEntries()">
                 <option value="10" {{ $limit == 10? 'selected="selected"' : '' }}>10</option>
                 <option value="25" {{ $limit == 25? 'selected="selected"' : '' }}>25</option>
                 <option value="50" {{ $limit == 50? 'selected="selected"' : '' }}>50</option>

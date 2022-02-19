@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class ShowEntry extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'expense_types',
+        'expenses',
+        'users',
+    ];
 }
