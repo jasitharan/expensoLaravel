@@ -34,9 +34,9 @@
                 <div>
                      <a href="{{ url('dashboard') }}" class="nav_logo"> 
                          <!-- <i class='bx bx-layer nav_logo-icon'></i>  -->
-                         <i class='emojione:letter-n'></i> 
+                         <i class='emojione:letter-e'></i> 
                          <!-- <i class='bx bx-letter-n nav_logo-icon'></i> -->
-                         <span class="nav_logo-name">NEWSAPP</span> 
+                         <span class="nav_logo-name">EXPENSO</span> 
                         </a>
                  
                 <div class="nav_list"> 

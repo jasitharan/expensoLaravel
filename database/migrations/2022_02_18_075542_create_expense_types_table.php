@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('expense_types', function (Blueprint $table) {
             $table->id();
-            $table->string('expType');
+            $table->string('expType')->unique();
             $table->date('createdDate');
             $table->string('modifedBy');
             $table->string('updatedDate');

@@ -74,8 +74,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
    }
    
    
-   function createCategory() {
-    document.forms['category-create-form'].submit();
+   function createExpenseType() {
+    document.forms['expense_types-create-form'].submit();
  }
  
 

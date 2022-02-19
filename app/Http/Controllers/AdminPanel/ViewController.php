@@ -95,16 +95,16 @@ class ViewController extends Controller
 
     public function getCreateExpenseType()
     {
-        return view('category.create_category');
+        return view('expenseTypes.create_expense_type');
     }
 
     public function getEditExpenseType(Request $request)
     {
 
         $data = array(
-            'category' => Category::find($request->name)
+            'category' => ExpenseType::find($request->id)
         );;
-        return view('category.edit_category')->with($data);
+        return view('expenseTypes.edit_expense_type')->with($data);
     }
 
 

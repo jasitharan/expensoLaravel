@@ -1,12 +1,12 @@
-@extends('category.category')
-@section('category-create-active','active')
+@extends('expenseTypes.expense_types')
+@section('expense_types-create-active','active')
 @section('edit-hidden','d-none')
 
-@section('category-section')
+@section('expense_types-section')
     
 <div class="card-body">
   
-   <form action="{{ url('category') }}" method="post" name="category-create-form" enctype="multipart/form-data">
+   <form action="{{ url('expense_types') }}" method="post" name="expense_types-create-form" enctype="multipart/form-data">
     @csrf
     <div>
       <h5 class="card-title mt-4">Name</h5>
@@ -24,7 +24,7 @@
         <input class="form-control" type="file" id="url_image" name="url_image">
       </div>
       <div class="text-end">
-        <a href="javascript: createCategory()" class="btn btn-primary ">Save</a>
+        <a href="javascript: createExpenseType()" class="btn btn-primary ">Save</a>
       </div>
     </form>
 </div>

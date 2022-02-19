@@ -43,9 +43,11 @@
             <thead>
                 <tr>
                     <th>
-                      <div >Image</div>
+                      <div >@sortablelink('expType', 'Expense Type  ')</div>
                       </th>
-                    <th>@sortablelink('name', 'Category Name  ')
+                    <th>@sortablelink('expCostLimit', 'Expense Cost Limit  ')
+                    </th>
+                    <th>Modified By
                     </th>
                     <th>@sortablelink('created_at', 'Created  ')</th>
                   
@@ -55,24 +57,22 @@
             <tbody>
                 
                @if (count($expenseTypes) > 0)
-                 @foreach ($expenseTypes as $category)
+                 @foreach ($expenseTypes as $expenseType)
                  <tr class="align-middle">
-                    <td>
-                        <img  alt="60x60" width="60px" height="60px" src="{{ $category->url_image }}">
-                    </td>
-                    <td>{{ $category->name }}</td>
-                
-                    <td>{{ $category->created_at }}</td>
+                    <td>{{ $expenseType->expType }}</td>
+                    <td>{{ $expenseType->expCostLimit }}</td>
+                    <td>{{ $expenseType->modifedBy }}</td>
+                    <td>{{ $expenseType->created_at }}</td>
                    
                     <td>
-                      <form method="POST" action="{{ url('category/'.$category->name) }}" accept-charset="UTF-8">
+                      <form method="POST" action="{{ url('expenseType/'.$expenseType->name) }}" accept-charset="UTF-8">
                         <input name="_method" type="hidden" value="DELETE">
                         @csrf
                         <div class="btn-group">
                           
                           
                         
-                            <a href="{{ url('category/'.$category->name.'/edit') }}" class="btn btn-link text-center">
+                            <a href="{{ url('expense_types/'.$expenseType->id.'/edit') }}" class="btn btn-link text-center">
                               <i class="fa fa-edit"></i>
                           </a>
                 

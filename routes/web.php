@@ -42,10 +42,10 @@ Route::group(['middleware' => 'check_admin'], function () {
 
     //Expense types
     Route::get('/expense_types', [ViewController::class, 'getExpenseTypeList']);
-    Route::get('/expense_types/create', [ViewController::class, 'getCreateCategory']);
-    Route::get('/expense_types/{name}/edit', [ViewController::class, 'getEditCategory']);
+    Route::get('/expense_types/create', [ViewController::class, 'getCreateExpenseType']);
+    Route::get('/expense_types/{id}/edit', [ViewController::class, 'getEditExpenseType']);
 
-    
+
 
     Route::patch('/show_entries', [EditController::class, 'editShowEntry']);
 

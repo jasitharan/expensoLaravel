@@ -1,11 +1,11 @@
-@extends('category.category')
-@section('category-edit-active','active')
+@extends('expenseTypes.expense_types')
+@section('expense_types-edit-active','active')
 
-@section('category-section')
+@section('expense_types-section')
     
 <div class="card-body">
   
-    <form action="{{ url('category/'.$category->name) }}" method="post" name="category-edit-form" enctype="multipart/form-data">
+    <form action="{{ url('expense_types/'.$category->id) }}" method="post" name="category-edit-form" enctype="multipart/form-data">
       <input name="_method" type="hidden" value="PUT">
       @csrf
       <div>
