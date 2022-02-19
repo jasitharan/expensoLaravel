@@ -1,10 +1,10 @@
-@extends('category.category')
-@section('category-list-active','active')
+@extends('expenseTypes.expense_types')
+@section('expense_types-list-active','active')
 @section('edit-hidden','d-none')
 
 
 
-@section('category-section')
+@section('expense_types-section')
 
 
 <div class="card-body">
@@ -54,8 +54,8 @@
             </thead>
             <tbody>
                 
-               @if (count($categories) > 0)
-                 @foreach ($categories as $category)
+               @if (count($expenseTypes) > 0)
+                 @foreach ($expenseTypes as $category)
                  <tr class="align-middle">
                     <td>
                         <img  alt="60x60" width="60px" height="60px" src="{{ $category->url_image }}">
@@ -95,9 +95,9 @@
     
     <div class="d-flex flex-row justify-content-between">
       
-        <div class="text-center m-2"><p>Showing {{ $categories->count() }} of {{ $categories->total() }} entries</p></div>
+        <div class="text-center m-2"><p>Showing {{ $expenseTypes->count() }} of {{ $expenseTypes->total() }} entries</p></div>
         <div class="d-flex justify-content-center">
-          {!! $categories->appends(Request::except('page'))->render() !!}
+          {!! $expenseTypes->appends(Request::except('page'))->render() !!}
       </div>
     </div>
     

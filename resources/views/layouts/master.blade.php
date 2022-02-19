@@ -46,7 +46,7 @@
                     
                     <a href="{{ url('expenses?sort=created_at&direction=desc') }}" class="nav_link @yield('category-active')"><i class='bx bx-money nav_icon'></i> <span class="nav_name">Expenses</span> </a> 
                     
-                    <a href="{{ url('expense_types?sort=created_at&direction=desc') }}" class="nav_link @yield('comments-active')"> <i class='bx bx-wallet nav_icon'></i> <span class="nav_name">ExpenseTypes</span> </a> 
+                    <a href="{{ url('expense_types?sort=created_at&direction=desc') }}" class="nav_link @yield('expense_types-active')"> <i class='bx bx-wallet nav_icon'></i> <span class="nav_name">ExpenseTypes</span> </a> 
                                         
                     <a href="{{ url('settings/global') }}" class="nav_link @yield('settings-active')"> <i class='bx bx-cog nav_icon'></i> <span class="nav_name">Settings</span> </a>
             

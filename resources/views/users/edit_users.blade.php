@@ -41,12 +41,13 @@
               <div id="url_imageHelp" class="form-text">
                   insert the image
                  </div>
+                 <img height=60px width=60px src='{{ $user->url_image }}' class="rounded float-left" alt="news_image">  
             </div>
             
        
             <div class="mt-3">
               <h5 class="card-title mb-3">Role</h5>
-         <select class="form-select" aria-label="Default select example" name="category_name">
+         <select class="form-select" aria-label="Default select example" name="role">
             <option  value="">Open this select roles</option>
             <option {{ $user->role == 'admin' ? "selected" : "" }} value="admin">Admin</option>
             <option {{ $user->role == 'employee' ? "selected" : "" }}  value="employee">Employee</option>

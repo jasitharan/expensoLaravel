@@ -23,6 +23,7 @@ class CreateController extends Controller
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string',
+            'role' => 'required',
             'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000'
         ]);
 
@@ -36,11 +37,13 @@ class CreateController extends Controller
         $user = User::create([
             'name' => $fields['name'],
             'email' => $fields['email'],
+            'role' => $fields['role'],
             'password' => bcrypt($fields['password']),
             'url_image' => Storage::url($path)
         ]);
 
 
+        
         return redirect('/users/create')->with('success', 'User Created');
     }
 

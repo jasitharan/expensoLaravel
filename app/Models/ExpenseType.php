@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
+
 
 class ExpenseType extends Model
 {
-    use HasFactory;
+    use HasFactory, Sortable;
 
     protected $fillable = [
         'expType',
@@ -15,5 +17,11 @@ class ExpenseType extends Model
         'modifedBy',
         'updatedDate',
         'expCostLimit'
+    ];
+
+    public $sortable = [
+        'expType',
+        'created_at',
+        'expCostLimit',
     ];
 }

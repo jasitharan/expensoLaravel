@@ -55,7 +55,7 @@
        
             <div class="mt-3">
               <h5 class="card-title mb-3">Role</h5>
-<select class="form-select" aria-label="Default select example" name="category_name">
+<select class="form-select" aria-label="Default select example" name="role">
   <option selected value="">Open this select roles</option>
   <option  value="admin">Admin</option>
   <option  value="employee">Employee</option>

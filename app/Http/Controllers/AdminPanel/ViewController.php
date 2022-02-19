@@ -16,8 +16,8 @@ class ViewController extends Controller
 
     public function getDashBoard()
     {
-         $expenses = Expense::all();
-         $sorted = $expenses->sortByDesc('created_at',)->take(5);
+        $expenses = Expense::all();
+        $sorted = $expenses->sortByDesc('created_at',)->take(5);
         $data = array(
             'expenses' => $sorted,
             'total_expenses' => count($expenses),
@@ -76,33 +76,29 @@ class ViewController extends Controller
     public function getExpenseTypeList(Request $request)
     {
 
-        $limit = ShowEntry::first()->category;
+        $limit = ShowEntry::first()->expense_types;
 
-
-        $categories = Category::sortable(['name', 'created_at'])->paginate($limit);
+        $expenseTypes = ExpenseType::sortable(['expType', 'expCostLimit' ,'created_at'])->paginate($limit);
 
 
         if ($request->hasAny('search')) {
-            $categories =  Category::where('name', 'like', '%' . $request->input('search') . '%')->paginate($limit);
+            $expenseTypes =  ExpenseType::where('expType', 'like', '%' . $request->input('search') . '%')->paginate($limit);
         }
 
 
-
-
-
         $data = array(
-            'categories' => $categories,
+            'expenseTypes' => $expenseTypes,
             'limit' => $limit
         );
-        return view('category.get_category')->with($data);
+        return view('expenseTypes.get_expense_types')->with($data);
     }
 
-    public function getCreateCategory()
+    public function getCreateExpenseType()
     {
         return view('category.create_category');
     }
 
-    public function getEditCategory(Request $request)
+    public function getEditExpenseType(Request $request)
     {
 
         $data = array(
@@ -112,7 +108,7 @@ class ViewController extends Controller
     }
 
 
-    // News
+    // Expense
 
     public function getNewsList(Request $request)
     {

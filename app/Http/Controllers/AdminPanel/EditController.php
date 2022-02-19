@@ -20,6 +20,7 @@ class EditController extends Controller
         $fields = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,'. $id,
+            'role' => 'required',
             'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000'
         ]);
 
@@ -28,6 +29,7 @@ class EditController extends Controller
             $user->update([
                 'name' => $fields['name'],
                 'email' => $fields['email'],
+                'role' => $fields['role']
         //        'url_image' => Storage::url($path)
             ]);
         } catch (Throwable $e) {
