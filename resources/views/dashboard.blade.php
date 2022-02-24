@@ -64,7 +64,7 @@
 
 
 <div class="card shadow-sm p-3 mb-5 bg-white rounded">
-    <h5 class="card-header">Recent 5 Expenses</h5>
+    <h5 class="card-header">Recent 5 Pending Expenses</h5>
     <div class="card-body">
         <table class="table table-striped table-valign-middle">
             <thead>
@@ -77,24 +77,47 @@
             </thead>
             <tbody>
                 
-                @if (count($expenses) > 0)
-                   @foreach ($expenses as $e)
-                   <tr class="align-middle">
-                    <td>
-                    {{ $e->user_name }}
-                    </td>
-                    <td>{{ $e->expenseFor }}</td>
-                    <td>{{ $e->expenseCost }}</td>
+            @if (count($expenses) > 0)
+                 @foreach ($expenses as $expense)
+                 <tr class="align-middle">
+                    <td>{{ $expense->user_name }}</td>
+                    <td>{{ $expense->expenseFor }}</td>
+                    <td>{{ $expense->expenseCost }}</td>
                     <td>
                         
-                        <a href="{{ url('news/'.$e->id.'/edit') }}" class="btn btn-link text-center">
-                            <i class="fa fa-edit"></i>
-                        </a>
+                        <form method="POST" action="{{ url('pending_expenses/'.$expense->id) }}" accept-charset="UTF-8" name="status-update-form">
+                          <input name="_method" type="hidden" value="PATCH">
+                          @csrf
+                          <div class="btn-group">
+                        
                       
+                              <a href="{{ url('expenses/'.$expense->id.'/edit') }}" class="btn btn-link text-center">
+                                <i class="fa fa-eye"></i>
+                              </a>
+                              
+                              @if($expense->status =='Unknown')         
+                                     
+                              <div>
+                               <input type="hidden" name="status" value="Approved">
+                               <button type="button" class="btn btn-link text-success" onclick="javascript: statusUpdate()"><i class="fa fa-check"></i></button>
+                              </div>
+                             
+                              <div>
+                              <input type="hidden" name="status" value="Rejected">
+                               <button type="button" class="btn btn-link text-danger" onclick="javascript: statusUpdate()"><i class="fa fa-times"></i></button>
+                              </div>
+                              
+                               @endif
+                             
+                              
+                          </div>
+                          </form>
+                  
                     </td>
                 </tr>
-                   @endforeach
-                @endif
+                     
+                 @endforeach
+               @endif
                 
                 
            </tbody>

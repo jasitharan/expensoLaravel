@@ -1,94 +1,102 @@
-@extends('news.news')
-@section('news-create-active','active')
+@extends('expenses.expenses')
+@section('expense-create-active','active')
 @section('edit-hidden','d-none')
 
     
 
-@section('news-section')
+@section('expense-section')
 
 <div class="card-body">
   
-  <form action="{{ url('news') }}" method="post" name="news-create-form" enctype="multipart/form-data">
+  <form action="{{ url('expenses') }}" method="post" name="expenses-create-form" enctype="multipart/form-data">
     @csrf
     <div class="container px-4">
       <div class="row gx-5">
         <div class="col">
-            {{-- Title --}}
+            {{-- Expense For --}}
          <div>
-          <h5 class="card-title mt-4">Title</h5>
-          <input type="text" class="form-control" id="title" name="title">
-          <div id="titleHelp" class="form-text">
-             insert news title
+          <h5 class="card-title mt-4">Expense For</h5>
+          <input type="text" class="form-control" id="expenseFor" name="expenseFor">
+          <div id="expenseForHelp" class="form-text">
+             insert Expense For
             </div>
          </div>
-          {{-- News Detail --}}
-         <div>
-          <h5 class="card-title mt-4">News Details</h5>
-          <div class="mb-3">
-              <textarea class="form-control" id="content" rows="6" name="content"></textarea>
-            </div>
-            <div id="contentHelp" class="form-text">
-              insert news details
+
+         {{-- Expense Type --}}
+         <div class="mt-3">
+              <h5 class="card-title mb-3">Expense Type</h5>
+            <select class="form-select" aria-label="Default select example" name="expenseType_id">
+              <option selected value="">Open this select expense type</option>
+                          @if (count($expense_types) > 0)
+              @foreach ($expense_types as $expense_type)
+              <option  value="{{ $expense_type->id }}">{{ $expense_type->expType }}</option>
+              @endforeach
+              @endif
+            </select>
+
+            <div id="expenseTypeHelp" class="form-text">
+              select expense type
              </div>
          </div>
+          
          
-          {{-- Image --}}
-         
-          <div class="mt-3 mb-4">
-              <h5 class="card-title mb-3">Image</h5>
-              <input class="form-control" type="file" id="url_image" name="url_image">
-              <div id="url_imageHelp" class="form-text">
-                  insert the image
-                 </div>
+         {{-- Expense Cost --}}
+         <div>
+          <h5 class="card-title mt-4">Expense Cost</h5>
+          <input type=number step=any class="form-control" id="expenseCost" name="expenseCost">
+          <div id="expenseCostHelp" class="form-text">
+             insert Expense Cost
             </div>
+         </div>
             
        
         </div>
         <div class="col">
           <div class="mt-3">
-              <h5 class="card-title mb-3">Category</h5>
-<select class="form-select" aria-label="Default select example" name="category_name">
-  <option selected value="">Open this select category</option>
-  @if (count($categories) > 0)
-  @foreach ($categories as $category)
-  <option  value="{{ $category->name }}">{{ $category->name }}</option>
-  @endforeach
-  @endif
-</select>
+              <h5 class="card-title mb-3">User</h5>
+            <select class="form-select" aria-label="Default select example" id='user_id' name="user_id">
+              <option selected value="">Open this select user</option>
+                          @if (count($users) > 0)
+              @foreach ($users as $user)
+              <option  value="{{ $user->id }}">{{ $user->name }}</option>
+              @endforeach
+              @endif
+            </select>
 
-<div id="newsHelp" class="form-text">
-  select category
- </div>
-</div>
+      <div id="userHelp" class="form-text">
+        select user
+      </div>
+       </div>
 {{-- divide --}}
-<div>
-  <h5 class="card-title mt-4">Headline</h5>
-  <div class="form-check">
-    <input class="form-check-input" type="radio" name="headline" id="headline" value="1">
-    <label class="form-check-label" for="headline">
-      yes
-    </label>
-  </div>
-  <div class="form-check">
-    <input class="form-check-input" type="radio" name="headline" id="headline" value="0" checked>
-    <label class="form-check-label" for="headline" >
-      no
-    </label>
-  </div>
- </div>
+
+      <div>
+        <h5 class="card-title mt-4">Created Date</h5>
+          <input type=date class="form-control" id="createdDate" name="createdDate">
+          <div id="createdDateHelp" class="form-text">
+             select created date
+            </div>
+         </div>
+            
+
             
  <div>
   <h5 class="card-title mt-4">Status</h5>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="published" id="published" name="published" value="1" checked>
-    <label class="form-check-label" for="published" >
-      publish
+    <input class="form-check-input" type="radio" name="status" id="status"  value="Unknown" checked>
+    <label class="form-check-label" for="status" >
+      Unknown
     </label>
   </div>
   <div class="form-check">
-    <input class="form-check-input" type="radio" name="published" id="published" value="0">
-    <label class="form-check-label" for="published">
-      unpublish
+    <input class="form-check-input" type="radio" name="status" id="status" value="Approved">
+    <label class="form-check-label" for="status">
+      Approve
+    </label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="radio" name="status" id="status" value="Rejected">
+    <label class="form-check-label" for="status">
+      Reject
     </label>
   </div>
  </div>   
@@ -98,7 +106,7 @@
     </div>
  
     <div class="text-end mt-4">
-      <a href="javascript: createNews()" class="btn btn-primary ">Save</a>
+      <a href="javascript: createExpense()" class="btn btn-primary ">Save</a>
     </div>
   </form>
 

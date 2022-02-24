@@ -39,6 +39,7 @@ Route::group(['middleware' => 'check_admin'], function () {
     Route::get('/expenses', [ViewController::class, 'getExpenseList']);
     Route::get('/expenses/create', [ViewController::class, 'getCreateExpense']);
     Route::get('/expenses/{id}/edit', [ViewController::class, 'getEditExpense']);
+    Route::get('/pending_expenses', [ViewController::class, 'getPendingExpenseList']);
 
     //Expense types
     Route::get('/expense_types', [ViewController::class, 'getExpenseTypeList']);
@@ -65,4 +66,17 @@ Route::group(['middleware' => 'check_admin'], function () {
     Route::post('/expense_types', [CreateController::class, 'createExpenseType']);
     Route::put('/expense_types/{id}', [EditController::class, 'editExpenseType']);
     Route::delete('/expense_types/{id}', [DeleteController::class, 'deleteExpenseType']);
+
+    //Expense
+    Route::post('/expenses', [CreateController::class, 'createExpense']);
+    Route::put('/expenses/{id}', [EditController::class, 'editExpense']);
+    Route::patch('/pending_expenses/{id}', [EditController::class, 'editPendingExpense']);
+    Route::delete('/expenses/{id}', [DeleteController::class, 'deleteExpense']);
+
+
+
+    Route::post('/send-notification', [NotificationController::class, 'sendNotification']);
+    Route::patch('/settings/global', [SettingsController::class, 'saveSettingGlobal']);
+    Route::patch('/settings/mail', [SettingsController::class, 'saveSettingMail']);
+    Route::patch('/settings/notification', [SettingsController::class, 'saveSettingNotification']);
 });

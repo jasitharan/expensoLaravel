@@ -16,7 +16,7 @@ class ViewController extends Controller
 
     public function getDashBoard()
     {
-        $expenses = Expense::all();
+        $expenses = Expense::where('status','like','Unknown')->get();
         $sorted = $expenses->sortByDesc('created_at',)->take(5);
         $data = array(
             'expenses' => $sorted,
@@ -113,39 +113,64 @@ class ViewController extends Controller
     public function getExpenseList(Request $request)
     {
 
-        $limit = ShowEntry::first()->news;
+        $limit = ShowEntry::first()->expenses;
 
-        $news = News::sortable(['title', 'created_at'])->paginate($limit);
+        $expenses = Expense::sortable(['expenseCost', 'expenseType_id','created_at'])->paginate($limit);
 
 
 
         if ($request->hasAny('search')) {
-            $news =  News::where('title', 'like', '%' . $request->input('search') . '%')->paginate($limit);
+            $expenses =  Expense::where('expenseFor', 'like', '%' . $request->input('search') . '%')->paginate($limit);
         }
 
         $data = array(
-            'news' => $news,
+            'expenses' => $expenses,
             'limit' => $limit
         );
-        return view('news.get_news')->with($data);
+        return view('expenses.get_expenses')->with($data);
+    }
+
+    public function getPendingExpenseList(Request $request)
+    {
+
+        $limit = ShowEntry::first()->expenses;
+
+        $expenses = Expense::where('status','like','Unknown');
+        
+
+        $expenses =  $expenses -> sortable(['expenseCost', 'expenseType_id','created_at'])->paginate($limit);
+
+
+
+        if ($request->hasAny('search')) {
+            $expenses =  Expense::where('expenseFor', 'like', '%' . $request->input('search') . '%')->paginate($limit);
+        }
+
+        $data = array(
+            'expenses' => $expenses,
+            'limit' => $limit
+        );
+        return view('pending_expenses.get_expenses')->with($data);
     }
 
     public function getCreateExpense()
     {
         $data = array(
-            'categories' => Category::all()
+            'expense_types' => ExpenseType::all(),
+            'users' => User::all()
         );
-        return view('news.create_news')->with($data);
+        return view('expenses.create_expenses')->with($data);
     }
 
     public function getEditExpense(Request $request)
     {
         $data = array(
-            'news' => News::where('id', $request->id)->first(),
-            'categories' => Category::all()
+            'expense' => Expense::find($request->id),
+            'expense_types' => ExpenseType::all(),
+            'users' => User::all()
         );;
 
-        return view('news.edit_news')->with($data);
+        return view('expenses.edit_expenses')->with($data);
     }
 
     

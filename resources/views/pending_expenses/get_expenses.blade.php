@@ -1,10 +1,10 @@
-@extends('expenses.expenses')
-@section('expense-list-active','active')
+@extends('pending_expenses.expenses')
+@section('pending_expenses-list-active','active')
 @section('edit-hidden','d-none')
 
     
 
-@section('expense-section')
+@section('pending_expenses-section')
 <div class="card-body">
     
     <div class="d-flex flex-row justify-content-between">
@@ -61,20 +61,27 @@
                     <td>{{ $expense->created_at }}</td>
                     <td>
                         
-                        <form method="POST" action="{{ url('expenses/'.$expense->id) }}" accept-charset="UTF-8">
-                          <input name="_method" type="hidden" value="DELETE">
+                        <form method="POST" action="{{ url('pending_expenses/'.$expense->id) }}" accept-charset="UTF-8" name="status-update-form">
+                          <input name="_method" type="hidden" value="PATCH">
                           @csrf
                           <div class="btn-group">
                             
                             
-                          
+                      
                               <a href="{{ url('expenses/'.$expense->id.'/edit') }}" class="btn btn-link text-center">
-                                <i class="fa fa-edit"></i>
-                            </a>
+                                <i class="fa fa-eye"></i>
+                              </a>
                   
-                          
-                          
-                              <button type="submit" class="btn btn-link text-danger" onclick="return confirm('Are you sure?')"><i class="fa fa-trash"></i></button>
+                              <div>
+                               <input type="hidden" name="status" value="Approved">
+                               <button type="button" class="btn btn-link text-success" onclick="javascript: statusUpdate()"><i class="fa fa-check"></i></button>
+                              </div>
+                             
+                              <div>
+                              <input type="hidden" name="status" value="Rejected">
+                               <button type="button" class="btn btn-link text-danger" onclick="javascript: statusUpdate()"><i class="fa fa-times"></i></button>
+                              </div>
+                              
                           </div>
                           </form>
                   

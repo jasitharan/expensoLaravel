@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Kyslik\ColumnSortable\Sortable;
+
 
 class Expense extends Model
 {
-    use HasFactory;
+    use HasFactory, Sortable;
 
     protected $fillable = [
         'createdDate',
@@ -20,17 +22,23 @@ class Expense extends Model
         'ticketNo',
         'airline',
         'daysInHotel',
+        'status',
         'hotelName',
         'expenseType_id',
         'user_id'
     ];
 
-    protected $appends = ['user_name'];
+    protected $appends = ['user_name,expenseType_name'];
 
      //define accessor
      public function getUsernameAttribute()
      {
          return User::find($this->user_id)->name;
+     }
+
+     public function getExpenseTypeNameAttribute()
+     {
+         return ExpenseType::find($this->expenseType_id)->expType;
      }
 
 }

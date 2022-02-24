@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title','ExpenseType')
+@section('title','ExpenseTypes')
 @section('expense_types-active','active')
 
 @section('content')

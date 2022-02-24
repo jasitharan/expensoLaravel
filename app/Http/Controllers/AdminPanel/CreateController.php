@@ -71,37 +71,47 @@ class CreateController extends Controller
         return redirect('/expense_types/create')->with('success', 'Expense Type Created');
     }
 
-
+    //Expense
     public function createExpense(Request $request)
     {
 
-        $request->validate([
-            'title' => 'required',
-            'content' => 'required',
-            'category_name' => 'required|string',
-            'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000'
+        $fields =  $request->validate([
+            'user_id' => 'required',
+            'createdDate' => 'required|date',
+            'receiptPath' => 'string',
+            'expenseCost' => 'required|numeric|between:0,999999999999.9999',
+            'expenseFor' => 'required|string',
+            'otherExpense' => 'string',
+            'rentalAgency' => 'string',
+            'status' => 'required',
+            'carClass' => 'string',
+            'ticketNo' => 'string',
+            'airline' => 'string',
+            'daysInHotel' => 'integer',
+            'hotelName' => 'string',
+            'expenseType_id' => 'required|exists:expense_types,id'
         ]);
 
 
-
-        if ($request->hasFile('url_image')) {
-            // Upload image
-            $path = Storage::put('images/news_images', $request->url_image, 'public');
-        }
-
-
-
-        News::create([
-            'title' => $request->title,
-            'content' => $request->content,
-            'published' => $request->published,
-            'headline' => $request->headline,
-            'url_image' => !isset($path) ? Category::find($request->category_name)->url_image : Storage::url($path),
-            'category_name' => $request->category_name
+         Expense::create([
+            'user_id' => $fields['user_id'],
+            'createdDate' => $fields['createdDate'],
+            'receiptPath' =>  $fields['receiptPath'] ?? null,
+            'expenseCost' => $fields['expenseCost'],
+            'expenseFor' => $fields['expenseFor'],
+            'status' => $fields['status'],
+            'otherExpense' => $fields['otherExpense'] ?? null,
+            'rentalAgency' => $fields['rentalAgency'] ?? null,
+            'carClass' => $fields['carClass'] ?? null,
+            'ticketNo' => $fields['ticketNo'] ?? null,
+            'airline' => $fields['airline'] ?? null,
+            'daysInHotel' => $fields['daysInHotel'] ?? null,
+            'hotelName' => $fields['hotelName'] ?? null,
+            'expenseType_id' => $fields['expenseType_id'],
         ]);
 
 
-        return redirect('/news/create')->with('success', 'News Created');
+        return redirect('/expenses/create')->with('success', 'Expense Created');
     }
 
 

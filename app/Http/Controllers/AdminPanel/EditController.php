@@ -69,56 +69,65 @@ class EditController extends Controller
 
     public function editExpense(Request $request)
     {
-        $news = News::find($request->id);
+        $expense = Expense::find($request->id);
 
-
-        if ($request->hasAny('url_image')) {
-
-            $request->validate([
-                'title' => 'required',
-                'content' => 'required',
-                'category_name' => 'required|string',
-                'url_image' => 'image||mimes:jpeg,jpg,png,gif|required|max:10000'
-            ]);
-
-            if ($news->url_image != null) {
-
-                if ($news->url_image != Storage::url('images/news_images/noimage.jpg')) {
-                    // Need to delete
-                    Storage::delete(strstr($news->url_image, "/images"));
-                }
-            }
-
-
-            if ($request->hasFile('url_image')) {
-                // Upload image
-                $path = Storage::put('images/news_images', $request->url_image, 'public');
-            } else {
-                $path = 'images/news_images/noimage.jpg';
-            }
-        } else {
-            $fileNameToStore = $news->url_image;
-        }
-
-
-
-
-
-
-        $news->update([
-            'title' => $request->title,
-            'content' => $request->content,
-            'published' => $request->published,
-            'headline' => $request->headline,
-            'url_image' =>  !isset($path) ? $fileNameToStore : Storage::url($path),
-            'category_name' => $request->category_name
+        $fields =  $request->validate([
+            'user_id' => 'required',
+            'createdDate' => 'required|date',
+            'receiptPath' => 'string',
+            'expenseCost' => 'required|numeric|between:0,999999999999.9999',
+            'expenseFor' => 'required|string',
+            'otherExpense' => 'string',
+            'rentalAgency' => 'string',
+            'status' => 'required',
+            'carClass' => 'string',
+            'ticketNo' => 'string',
+            'airline' => 'string',
+            'daysInHotel' => 'integer',
+            'hotelName' => 'string',
+            'expenseType_id' => 'required|exists:expense_types,id'
         ]);
 
 
-        return redirect('news/' . $request->id . '/edit')->with('success', 'Updated Successfully');
+        $expense->update([
+            'user_id' => $fields['user_id'],
+            'createdDate' => $fields['createdDate'],
+            'receiptPath' =>  $fields['receiptPath'] ?? null,
+            'expenseCost' => $fields['expenseCost'],
+            'expenseFor' => $fields['expenseFor'],
+            'status' => $fields['status'],
+            'otherExpense' => $fields['otherExpense'] ?? null,
+            'rentalAgency' => $fields['rentalAgency'] ?? null,
+            'carClass' => $fields['carClass'] ?? null,
+            'ticketNo' => $fields['ticketNo'] ?? null,
+            'airline' => $fields['airline'] ?? null,
+            'daysInHotel' => $fields['daysInHotel'] ?? null,
+            'hotelName' => $fields['hotelName'] ?? null,
+            'expenseType_id' => $fields['expenseType_id'],
+        ]);
+
+
+        return redirect('expenses/' . $request->id . '/edit')->with('success', 'Updated Successfully');
     }
 
  
+    public function editPendingExpense(Request $request)
+    {
+
+        $request->validate([
+            'status' => 'required',
+        ]);
+
+        $pending_expense = Expense::find($request->id);
+
+        $pending_expense->update(
+            [
+                'status' => $request->input('status'),
+               
+            ]
+        );
+        return redirect('pending_expenses/')->with('success', 'Updated Successfully');
+    }
 
 
 

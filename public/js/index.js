@@ -69,8 +69,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
       document.forms['users-edit-form'].submit();
     }
     
-    function editNews() {
-      document.forms['news-edit-form'].submit();
+    function editExpense() {
+      document.forms['expenses-edit-form'].submit();
    }
    
    
@@ -84,8 +84,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
   document.forms['expense_types-edit-form'].submit();
 }
 
-function createComment() {
-  document.forms['comment-create-form'].submit();
+function createExpense() {
+  document.forms['expenses-create-form'].submit();
 }
 
 function searchTable() {
@@ -101,6 +101,10 @@ function submitEntries() {
   document.forms['show-entries-form'].submit();
 }
  
+
+function statusUpdate() {
+  document.forms['status-update-form'].submit();
+}
   
  
  
