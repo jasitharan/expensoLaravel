@@ -20,7 +20,7 @@ class ViewController extends Controller
         $sorted = $expenses->sortByDesc('created_at',)->take(5);
         $data = array(
             'expenses' => $sorted,
-            'total_expenses' => count($expenses),
+            'total_expenses' => count(Expense::all()),
             'total_expenseTypes' => count(ExpenseType::all()),
             'total_users' => count(User::all()->where('role', 'employee'))
         );
