@@ -17,6 +17,7 @@ class EditController extends Controller
     // User
     public function editUser(Request $request, $id)
     {
+        $user = User::find($id);
         $fields = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email,'. $id,
@@ -24,13 +25,35 @@ class EditController extends Controller
             'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000'
         ]);
 
+      
+
+        if ($request->hasFile('url_image')) {
+
+            if ($user->url_image != null) {
+
+                if ($user->url_image != Storage::url('images/user_images/noimage.jpg')) {
+                    // Need to delete
+                    Storage::delete(strstr($user->url_image, "/images"));
+                }
+            }
+
+            // Upload image
+            $path = Storage::put('images/user_images', $request->url_image, 'public');
+        } 
+
+        if (empty($path) ) {
+            $url_image  = $user->url_image;
+        } else {
+            $url_image = Storage::url($path);
+        }
+
         try {
-            $user = User::find($id);
+            
             $user->update([
                 'name' => $fields['name'],
                 'email' => $fields['email'],
-                'role' => $fields['role']
-        //        'url_image' => Storage::url($path)
+                'role' => $fields['role'],
+                'url_image' => $url_image
             ]);
         } catch (Throwable $e) {
             echo $e;
