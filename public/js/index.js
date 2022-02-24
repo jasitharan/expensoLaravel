@@ -80,8 +80,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
  
 
  
- function editCategory() {
-  document.forms['category-edit-form'].submit();
+ function editExpenseType() {
+  document.forms['expense_types-edit-form'].submit();
 }
 
 function createComment() {

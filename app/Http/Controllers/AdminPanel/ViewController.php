@@ -102,7 +102,7 @@ class ViewController extends Controller
     {
 
         $data = array(
-            'category' => ExpenseType::find($request->id)
+            'expType' => ExpenseType::find($request->id)
         );;
         return view('expenseTypes.edit_expense_type')->with($data);
     }
@@ -110,7 +110,7 @@ class ViewController extends Controller
 
     // Expense
 
-    public function getNewsList(Request $request)
+    public function getExpenseList(Request $request)
     {
 
         $limit = ShowEntry::first()->news;
@@ -130,7 +130,7 @@ class ViewController extends Controller
         return view('news.get_news')->with($data);
     }
 
-    public function getCreateNews()
+    public function getCreateExpense()
     {
         $data = array(
             'categories' => Category::all()
@@ -138,7 +138,7 @@ class ViewController extends Controller
         return view('news.create_news')->with($data);
     }
 
-    public function getEditNews(Request $request)
+    public function getEditExpense(Request $request)
     {
         $data = array(
             'news' => News::where('id', $request->id)->first(),

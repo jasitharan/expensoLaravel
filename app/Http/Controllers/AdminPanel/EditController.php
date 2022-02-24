@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\AdminPanel;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\ExpenseType;
 use App\Models\User;
-use App\Models\News;
+use App\Models\Expense;
 use App\Models\ShowEntry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -40,7 +40,34 @@ class EditController extends Controller
     }
 
 
-    public function editNews(Request $request)
+    //Expense Type
+    public function editExpenseType(Request $request, $id)
+    {
+
+        $fields = $request->validate([
+            'expType' => 'unique:expense_types,expType,'.$id,
+            'expCostLimit' => 'numeric|between:0,999999999999.9999',
+        ]);
+
+
+
+        $expenseType = ExpenseType::find($id);
+
+        $modifiedBy = auth()->user()->name;
+
+
+
+        $expenseType->update([
+            'expType' => $fields['expType'],
+            'expCostLimit' => $fields['expCostLimit'],
+            'modifedBy' => $modifiedBy
+        ]);
+
+
+        return redirect('expense_types/' . $request->id . '/edit')->with('success', 'Updated Successfully');
+    }
+
+    public function editExpense(Request $request)
     {
         $news = News::find($request->id);
 
@@ -91,52 +118,7 @@ class EditController extends Controller
         return redirect('news/' . $request->id . '/edit')->with('success', 'Updated Successfully');
     }
 
-    public function editCategory(Request $request, $name)
-    {
-
-        $request->validate([
-            'name' => 'string',
-            'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000'
-        ]);
-
-
-        $category = Category::find($name);
-
-
-
-        if ($request->hasAny('url_image')) {
-
-            $request->validate([
-                'url_image' => 'image||mimes:jpeg,jpg,png,gif|required|max:10000'
-            ]);
-
-            if ($category->url_image != null) {
-                if ($category->url_image !=  Storage::url('images/category_images/noimage.jpg')) {
-                    // return $category->url_image;
-                    Storage::delete(strstr($category->url_image, "/images"));
-                }
-            }
-
-
-            if ($request->hasFile('url_image')) {
-                // Upload image
-                $path = Storage::put('images/category_images', $request->url_image, 'public');
-            } else {
-                $path = 'images/category_images/noimage.jpg';
-            }
-        } else {
-            $fileNameToStore = $category->url_image;
-        }
-
-
-        $category->update([
-            'name' => $request->name,
-            'url_image' => !isset($path) ? $fileNameToStore : Storage::url($path)
-        ]);
-
-
-        return redirect('category/' . $request->name . '/edit')->with('success', 'Updated Successfully');
-    }
+ 
 
 
 

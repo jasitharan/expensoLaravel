@@ -5,27 +5,32 @@
     
 <div class="card-body">
   
-    <form action="{{ url('expense_types/'.$category->id) }}" method="post" name="category-edit-form" enctype="multipart/form-data">
+    <form action="{{ url('expense_types/'.$expType->id) }}" method="post" name="expense_types-edit-form" enctype="multipart/form-data">
       <input name="_method" type="hidden" value="PUT">
       @csrf
       <div>
-        <h5 class="card-title mt-4">Name</h5>
-      
-        <div class="mb-4 mt-3">
-          <input type="text" class="form-control" id="name" name="name" value="{{ $category->name }}">
-          <div id="titleHelp" class="form-text">
-            Insert category name
-            </div>
-        </div>
+      <h5 class="card-title mt-4">Expense Type</h5>
+    
+      <div class="mb-4 mt-3">
+        <input type="text" class="form-control" id="expType" name="expType" value="{{$expType->expType}}">
+        <div id="expTypeHelp" class="form-text">
+          Insert expense type
+          </div>
       </div>
-      
-      <div class="mt-4 mb-4">
-        <img height=60px width=60px src='{{ $category->url_image }}' class="rounded float-left" alt="news_image">
-          <h5 class="card-title mt-2 mb-3">Image</h5>
-          <input class="form-control" type="file" id="url_image" name="url_image">
-        </div>
+    </div>
+
+    <div>
+      <h5 class="card-title mt-4">Expense Cost Limit</h5>
+    
+      <div class="mb-4 mt-3">
+        <input type=number step=any class="form-control" id="expCostLimit" name="expCostLimit" value="{{$expType->expCostLimit}}">
+        <div id="expCostLimitHelp" class="form-text">
+          Insert expense cost limit
+          </div>
+      </div>
+    </div>
         <div class="text-end">
-          <a href="javascript: editCategory()" class="btn btn-primary ">Save</a>
+          <a href="javascript: editExpenseType()" class="btn btn-primary ">Save</a>
         </div>
     </form>
   

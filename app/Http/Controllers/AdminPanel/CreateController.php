@@ -4,10 +4,10 @@ namespace App\Http\Controllers\AdminPanel;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\AdminPanel\UtilController;
-use App\Models\Category;
-use App\Models\Comment;
-use App\Models\News;
+use App\Models\ExpenseType;
+use App\Models\Expense;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
@@ -47,7 +47,32 @@ class CreateController extends Controller
         return redirect('/users/create')->with('success', 'User Created');
     }
 
-    public function createNews(Request $request)
+    // Expense Type
+    public function createExpenseType(Request $request)
+    {
+
+
+        $request->validate([
+            'expType' => 'required|unique:expense_types',
+            'expCostLimit' => 'required|numeric|between:0,999999999999.9999',
+        ]);
+
+        $modifiedBy = auth()->user()->name;
+
+
+         ExpenseType::create([
+            'expType' => $request->expType,
+            'expCostLimit' => $request->expCostLimit,
+            'createdDate' => Carbon::now(),
+            'updatedDate' => Carbon::now(),
+            'modifedBy' => $modifiedBy
+        ]);
+
+        return redirect('/expense_types/create')->with('success', 'Expense Type Created');
+    }
+
+
+    public function createExpense(Request $request)
     {
 
         $request->validate([
@@ -79,31 +104,6 @@ class CreateController extends Controller
         return redirect('/news/create')->with('success', 'News Created');
     }
 
-
-    public function createCategory(Request $request)
-    {
-
-
-        $request->validate([
-            'name' => 'required|unique:categories',
-            'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000'
-        ]);
-
-        if ($request->hasFile('url_image')) {
-            // Upload image
-            $path = Storage::put('images/category_images', $request->url_image, 'public');
-        } else {
-            $path = 'images/category_images/noimage.jpg';
-        }
-
-        Category::create([
-            'name' => $request->name,
-            'url_image' => Storage::url($path)
-        ]);
-
-
-        return redirect('/category/create')->with('success', 'Category Created');
-    }
 
 
    

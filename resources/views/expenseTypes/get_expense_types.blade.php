@@ -65,11 +65,11 @@
                     <td>{{ $expenseType->created_at }}</td>
                    
                     <td>
-                      <form method="POST" action="{{ url('expenseType/'.$expenseType->name) }}" accept-charset="UTF-8">
+                      <form method="POST" action="{{ url('expense_types/'.$expenseType->id) }}" accept-charset="UTF-8">
                         <input name="_method" type="hidden" value="DELETE">
                         @csrf
                         <div class="btn-group">
-                          
+                        
                           
                         
                             <a href="{{ url('expense_types/'.$expenseType->id.'/edit') }}" class="btn btn-link text-center">

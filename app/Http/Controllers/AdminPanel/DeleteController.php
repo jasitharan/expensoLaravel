@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\AdminPanel;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\ExpenseType;
 use App\Models\User;
-use App\Models\News;
+use App\Models\Expense;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -20,7 +20,16 @@ class DeleteController extends Controller
         return redirect('users')->with('success', 'User Deleted Successfully');
     }
 
-    public function deleteNews(Request $request)
+    // Expense Type
+    public function deleteExpenseType(Request $request)
+    {
+        $expenseType = ExpenseType::find($request->id);
+        $expenseType->delete();
+
+        return redirect('expense_types')->with('success', 'Expense Type Deleted Successfully');
+    }
+
+    public function deleteExpense(Request $request)
     {
         $news = News::find($request->id);
 
@@ -38,22 +47,7 @@ class DeleteController extends Controller
         return redirect('news')->with('success', 'News Deleted Successfully');
     }
 
-    public function deleteCategory(Request $request)
-    {
-        $category = Category::find($request->name);
-
-        if ($category->url_image != null) {
-            if ($category->url_image !=  Storage::url('images/category_images/noimage.jpg')) {
-                // return $category->url_image;
-                Storage::delete(strstr($category->url_image, "/images"));
-            }
-        }
-
-
-        $category->delete();
-
-        return redirect('category')->with('success', 'Category Deleted Successfully');
-    }
+ 
 
    
 }

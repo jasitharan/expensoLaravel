@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('createdDate');
             $table->string('modifedBy');
             $table->string('updatedDate');
-            $table->float('expCostLimit');
+            $table->decimal('expCostLimit',16,4);
             $table->timestamps();
         });
     }
