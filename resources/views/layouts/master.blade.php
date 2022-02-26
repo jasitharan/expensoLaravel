@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
     <link rel = "icon" href = 
-    "https://myflutternewsapp-images.s3.us-east-2.amazonaws.com/images/logo/logo.png" 
+    "{{ asset('images/logo.png') }}" 
             type = "image/x-icon">
    
    @if(env('APP_ENV') == 'production')

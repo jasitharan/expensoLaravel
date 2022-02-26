@@ -12,7 +12,7 @@
 
     <title>Login</title>
     <link rel = "icon" href = 
-    "https://myflutternewsapp-images.s3.us-east-2.amazonaws.com/images/logo/logo.png" 
+    "{{ asset('images/logo.png') }}" 
             type = "image/x-icon">
 </head>
 
@@ -47,7 +47,7 @@
                     
                    <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
                     @csrf
-                    <img class='mt-4 mb-4' src="https://myflutternewsapp-images.s3.us-east-2.amazonaws.com/images/logo/logo.png" alt="bootstrap logo" height="72">
+                    <img class='mt-4 mb-4' src="{{ asset('images/logo.png') }}" alt="bootstrap logo" height="72">
                     <h1 class="h3 mb-3 font-weigh-normal">Please sign in</h1>
                     <label class="visually-hidden" for="emailAddress">Email address</label>
                     <input type="email" id="emailAddress" class="form-control" name="email" placeholder="Email Address" required autofocus>
