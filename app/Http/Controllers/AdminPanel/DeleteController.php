@@ -31,20 +31,20 @@ class DeleteController extends Controller
 
     public function deleteExpense(Request $request)
     {
-        $news = News::find($request->id);
+        $expense = Expense::find($request->id);
 
 
-        if ($news->url_image != null) {
+        if ($expense->url_image != null) {
 
-            if ($news->url_image != Storage::url('images/news_images/noimage.jpg') && !str_contains($news->url_image, 'category_images')) {
+            if ($expense->url_image != Storage::url('images/expenses_images/noimage.jpg') && !str_contains($expense->url_image, 'category_images')) {
                 // Need to delete
-                Storage::delete(strstr($news->url_image, "/images"));
+                Storage::delete(strstr($expense->url_image, "/images"));
             }
         }
 
-        $news->delete();
+        $expense->delete();
 
-        return redirect('news')->with('success', 'News Deleted Successfully');
+        return redirect('expenses')->with('success', 'Expense Deleted Successfully');
     }
 
  

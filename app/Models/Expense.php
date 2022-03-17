@@ -28,7 +28,7 @@ class Expense extends Model
         'user_id'
     ];
 
-    protected $appends = ['user_name,expenseType_name'];
+    
 
      //define accessor
      public function getUsernameAttribute()
@@ -41,4 +41,5 @@ class Expense extends Model
          return ExpenseType::find($this->expenseType_id)->expType;
      }
 
+     protected $appends = ['user_name','expenseType_name'];
 }

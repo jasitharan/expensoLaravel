@@ -19,10 +19,10 @@ class ExpenseController extends Controller
     {
         try {
             $fields =  $request->validate([
-                'createdDate' => 'date',
+                'createdDate' => 'required|date',
                 'receiptPath' => 'string',
-                'expenseCost' => 'required|numeric',
-                'expenseFor' => 'string',
+                'expenseCost' => 'required|numeric|between:0,999999999999.9999',
+                'expenseFor' => 'required|string',
                 'otherExpense' => 'string',
                 'rentalAgency' => 'string',
                 'carClass' => 'string',
@@ -47,20 +47,21 @@ class ExpenseController extends Controller
 
        
             // Validate the value...
-            $expense =  Expense::create([
+           $expense =  Expense::create([
                 'user_id' => $user_id,
-                'createdDate' => $request->get('createdDate'),
-                'receiptPath' =>  $request->get('receiptPath'),
-                'expenseCost' => $request->get('expenseCost'),
-                'expenseFor' => $request->get('expenseFor'),
-                'otherExpense' => $request->get('otherExpense'),
-                'rentalAgency' => $request->get('rentalAgency'),
-                'carClass' => $request->get('carClass'),
-                'ticketNo' => $request->get('ticketNo'),
-                'airline' => $request->get('airline'),
-                'daysInHotel' => $request->get('daysInHotel'),
-                'hotelName' => $request->get('hotelName'),
-                'expenseType_id' => $request->get('expenseType_id'),
+                'createdDate' => $fields['createdDate'],
+                'receiptPath' =>  $fields['receiptPath'] ?? null,
+                'expenseCost' => $fields['expenseCost'],
+                'expenseFor' => $fields['expenseFor'],
+                'status' => 'Unknown',
+                'otherExpense' => $fields['otherExpense'] ?? null,
+                'rentalAgency' => $fields['rentalAgency'] ?? null,
+                'carClass' => $fields['carClass'] ?? null,
+                'ticketNo' => $fields['ticketNo'] ?? null,
+                'airline' => $fields['airline'] ?? null,
+                'daysInHotel' => $fields['daysInHotel'] ?? null,
+                'hotelName' => $fields['hotelName'] ?? null,
+                'expenseType_id' => $fields['expenseType_id'],
             ]);
 
         return $expense;
