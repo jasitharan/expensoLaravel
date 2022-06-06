@@ -12,13 +12,22 @@ class ExpenseController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $query = Expense::where('user_id', $user_id);
+        $query = Expense::where('user_id', $user_id)->get()->sortByDesc('created_at');
+        
+        if (!empty(request('status'))) {
+            $query = $query->where('status',request('status'));
+        }
         
         if (!empty(request('createdDate'))) {
             $query = $query->where('createdDate',request('createdDate'));
         }
         
-        return $query->get()->sortByDesc('created_at')->values();
+        
+        if (!empty(request('skip')) || !empty(request('take'))) {
+            $query = $query->skip(request('skip'))->take(request('take'));
+        }
+        
+         return $query->values();
     }
 
     public function store(Request $request)
