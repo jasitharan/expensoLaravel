@@ -16,7 +16,8 @@ class ExpenseType extends Model
         'createdDate',
         'modifedBy',
         'updatedDate',
-        'expCostLimit'
+        'expCostLimit',
+        'url_image'
     ];
 
     public $sortable = [

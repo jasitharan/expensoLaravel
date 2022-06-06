@@ -52,20 +52,29 @@ class CreateController extends Controller
     {
 
 
-        $request->validate([
+        $fields =  $request->validate([
             'expType' => 'required|unique:expense_types',
             'expCostLimit' => 'required|numeric|between:0,999999999999.9999',
+            'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000'
         ]);
+        
+        if ($request->hasFile('url_image')) {
+            // Upload image
+            $path = Storage::put('images/expense_type_images', $request->url_image, 'public');
+        } else {
+            $path = 'images/expense_type_images/noimage.jpg';
+        }
 
         $modifiedBy = auth()->user()->name;
 
 
          ExpenseType::create([
-            'expType' => $request->expType,
-            'expCostLimit' => $request->expCostLimit,
+            'expType' => $fields['expType'],
+            'expCostLimit' => $fields['expCostLimit'],
             'createdDate' => Carbon::now(),
             'updatedDate' => Carbon::now(),
-            'modifedBy' => $modifiedBy
+            'modifedBy' => $modifiedBy,
+            'url_image' => Storage::url($path)
         ]);
 
         return redirect('/expense_types/create')->with('success', 'Expense Type Created');

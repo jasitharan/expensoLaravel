@@ -40,6 +40,11 @@ class Expense extends Model
      {
          return ExpenseType::find($this->expenseType_id)->expType;
      }
+     
+     public function getExpenseTypeImageAttribute()
+     {
+         return ExpenseType::find($this->expenseType_id)->url_image;
+     }
 
-     protected $appends = ['user_name','expenseType_name'];
+     protected $appends = ['user_name','expenseType_name','expenseType_image'];
 }

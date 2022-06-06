@@ -20,9 +20,17 @@ class ExpenseTypeController extends Controller
         $request->validate([
             'expType' => 'required',
             'expCostLimit' => 'required',
+            'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000',
         ]);
 
         $modifiedBy = auth()->user()->name;
+        
+        if ($request->hasFile('url_image')) {
+            // Upload image
+            $path = Storage::put('images/expense_type_images', $request->url_image, 'public');
+        } else {
+            $path = 'images/expense_type_images/noimage.jpg';
+        }
 
 
         return ExpenseType::create([
@@ -30,7 +38,8 @@ class ExpenseTypeController extends Controller
             'expCostLimit' => $request->expCostLimit,
             'createdDate' => Carbon::now(),
             'updatedDate' => Carbon::now(),
-            'modifedBy' => $modifiedBy
+            'modifedBy' => $modifiedBy,
+            'url_image' => $request->url_image
         ]);
     }
 
@@ -44,7 +53,8 @@ class ExpenseTypeController extends Controller
 
         $request->validate([
             'expType' => 'string',
-            'expCostLimit' => 'numeric'
+            'expCostLimit' => 'numeric',
+            'url_image' => 'string'
         ]);
 
 
