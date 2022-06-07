@@ -12,14 +12,18 @@ class ExpenseController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $query = Expense::where('user_id', $user_id)->get()->sortByDesc('created_at');
+        $query = Expense::where('user_id', $user_id)->get()->sortByDesc('createdDate');
+        
+        if (!empty(request('expenseType_id'))) {
+            $query = $query->where('expenseType_id',request('expenseType_id'));
+        }
         
         if (!empty(request('status'))) {
             $query = $query->where('status',request('status'));
         }
         
-        if (!empty(request('createdDate'))) {
-            $query = $query->where('createdDate',request('createdDate'));
+        if (!empty(request('startDate')) && !empty(request('endDate'))) {
+            $query = $query->whereBetween('createdDate', [request('startDate'), request('endDate')]);
         }
         
         
