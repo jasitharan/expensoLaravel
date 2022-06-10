@@ -29,7 +29,7 @@ class CreateController extends Controller
 
         if ($request->hasFile('url_image')) {
             // Upload image
-            $path = Storage::put('images/user_images', $request->url_image, 'public');
+            $path = Storage::disk('public')->put('images/user_images', $request->url_image);
         } else {
             $path = 'images/user_images/noimage.jpg';
         }
@@ -60,7 +60,7 @@ class CreateController extends Controller
         
         if ($request->hasFile('url_image')) {
             // Upload image
-            $path = Storage::put('images/expense_type_images', $request->url_image, 'public');
+            $path = Storage::disk('public')->put('images/expense_type_images', $request->url_image);
         } else {
             $path = 'images/expense_type_images/noimage.jpg';
         }

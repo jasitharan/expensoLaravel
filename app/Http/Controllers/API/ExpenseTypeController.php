@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ExpenseType;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 
 class ExpenseTypeController extends Controller
@@ -27,7 +28,7 @@ class ExpenseTypeController extends Controller
         
         if ($request->hasFile('url_image')) {
             // Upload image
-            $path = Storage::put('images/expense_type_images', $request->url_image, 'public');
+            $path = Storage::disk('public')->put('images/expense_type_images', $request->url_image);
         } else {
             $path = 'images/expense_type_images/noimage.jpg';
         }
@@ -39,7 +40,7 @@ class ExpenseTypeController extends Controller
             'createdDate' => Carbon::now(),
             'updatedDate' => Carbon::now(),
             'modifedBy' => $modifiedBy,
-            'url_image' => $request->url_image
+            'url_image' => Storage::url($path)
         ]);
     }
 

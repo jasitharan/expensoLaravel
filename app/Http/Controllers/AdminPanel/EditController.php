@@ -38,7 +38,7 @@ class EditController extends Controller
             }
 
             // Upload image
-            $path = Storage::put('images/user_images', $request->url_image, 'public');
+            $path = Storage::disk('public')->put('images/user_images', $request->url_image);
         } 
 
         if (empty($path) ) {

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Kyslik\ColumnSortable\Sortable;
 
 
+
 class ExpenseType extends Model
 {
     use HasFactory, Sortable;
