@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Expense;
+use Carbon\Carbon;
 
 
 class ExpenseController extends Controller
@@ -141,5 +142,23 @@ class ExpenseController extends Controller
 
             return $e;
         }
+    }
+    
+    public function getChartData() {
+        $user_id = auth()->user()->id;
+        $year = now()->format('Y');
+        $month = now()->format('m');
+        
+    
+        $expensesForMonth = Expense::where('user_id', $user_id)->whereBetween('createdDate', [$year.'-01-01', $year.'-12-01'])->where('status', 'Approved')->get(['createdDate','expenseCost']);
+        
+        $expensesForWeek = Expense::where('user_id', $user_id)->whereBetween('createdDate', [$year.'-' .$month .'-01', $year.'-' .$month . '-31'])
+        ->where('status', 'Approved')->get(['createdDate','expenseCost']);
+        
+        
+        return response()->json([
+            'month' => $expensesForMonth,
+            'week' => $expensesForWeek
+        ]);
     }
 }

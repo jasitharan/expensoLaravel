@@ -33,18 +33,18 @@ class Expense extends Model
      //define accessor
      public function getUsernameAttribute()
      {
-         return User::find($this->user_id)->name;
+        if (!empty($this->user_id)) {
+            return User::find($this->user_id)->name;
+        }
+  
      }
 
-     public function getExpenseTypeNameAttribute()
+     public function getExpenseTypeAttribute()
      {
-         return ExpenseType::find($this->expenseType_id)->expType;
-     }
-     
-     public function getExpenseTypeImageAttribute()
-     {
-         return ExpenseType::find($this->expenseType_id)->url_image;
+        if (!empty($this->expenseType_id)) {
+         return ExpenseType::find($this->expenseType_id);
+        }
      }
 
-     protected $appends = ['user_name','expenseType_name','expenseType_image'];
+     protected $appends = ['user_name', 'expenseType'];
 }
