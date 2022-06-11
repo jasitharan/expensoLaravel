@@ -3,23 +3,12 @@
 namespace App\Http\Controllers\AdminPanel;
 
 use App\Http\Controllers\Controller;
-use App\Models\News;
+use App\Models\Expense;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class NotificationController extends Controller
 {
-    // Send Notification Page
-    public function getNotificationPage()
-    {
-
-        $news = News::all();
-        $data = array(
-            'news' => $news,
-        );
-        return view('notification')->with($data);
-    }
-
     public function sendNotification(Request $request)
     {
 
@@ -60,6 +49,7 @@ class NotificationController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
 
         $response = curl_exec($ch);
-        return redirect('/notifications')->with('success', 'Notification Send Successfully');
+        return $response;
     }
+ 
 }

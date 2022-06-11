@@ -6,13 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Models\ExpenseType;
 use App\Models\User;
 use App\Models\Expense;
+use App\Models\Setting;
 use App\Models\ShowEntry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Throwable;
 
+
 class EditController extends Controller
 {
+    
 
     // User
     public function editUser(Request $request, $id)
@@ -129,7 +132,7 @@ class EditController extends Controller
             'expenseType_id' => $fields['expenseType_id'],
         ]);
 
-
+       
         return redirect('expenses/' . $request->id . '/edit')->with('success', 'Updated Successfully');
     }
 
@@ -142,6 +145,8 @@ class EditController extends Controller
         ]);
 
         $pending_expense = Expense::find($request->id);
+        
+        
 
         $pending_expense->update(
             [
@@ -149,6 +154,9 @@ class EditController extends Controller
                
             ]
         );
+        
+
+        
         return redirect('pending_expenses/')->with('success', 'Updated Successfully');
     }
 
@@ -191,4 +199,6 @@ class EditController extends Controller
             return redirect('users');
         }
     }
+    
+  
 }
