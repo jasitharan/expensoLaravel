@@ -93,7 +93,7 @@
     <div class="d-flex flex-row justify-content-between">
         <div class="text-center m-2"><p>Showing {{ $expenses->count() }} of {{ $expenses->total() }} entries</p></div>
         <div class="d-flex justify-content-center">
-          {!! $expenses->appends(Request::except('page'))->render() !!}
+        {!! $expenses->appends(Request::except('page'))->render() !!}
       </div>
     </div>
     

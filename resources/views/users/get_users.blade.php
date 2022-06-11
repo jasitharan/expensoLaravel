@@ -15,7 +15,7 @@
           <input name="_method" type="hidden" value="patch">
           @csrf
           <select class="form-select" aria-label="Default select example" id='users-limit' name='users-limit' onchange="javascript: submitEntries()">
-            <option value="10" {{ $limit == 10? 'selected="selected"' : '' }}>10</option>
+            <option value="10" {{ ($limit == 10? 'selected="selected"' : '') }}>10</option>
             <option value="25" {{ $limit == 25? 'selected="selected"' : '' }}>25</option>
             <option value="50" {{ $limit == 50? 'selected="selected"' : '' }}>50</option>
             <option value="100" {{ $limit == 100? 'selected="selected"' : '' }}>100</option>

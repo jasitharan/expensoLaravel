@@ -42,6 +42,7 @@
         <table class="table table-striped table-valign-middle">
             <thead>
                 <tr>
+                  <th>Image</th>
                     <th>
                       <div >@sortablelink('expType', 'Expense Type  ')</div>
                       </th>
@@ -59,6 +60,8 @@
                @if (count($expenseTypes) > 0)
                  @foreach ($expenseTypes as $expenseType)
                  <tr class="align-middle">
+                   <td>
+                        <img  alt="60x60" width="60px" height="60px" src="{{ $expenseType->url_image }}" data-holder-rendered="true">
                     <td>{{ $expenseType->expType }}</td>
                     <td>{{ $expenseType->expCostLimit }}</td>
                     <td>{{ $expenseType->modifedBy }}</td>
