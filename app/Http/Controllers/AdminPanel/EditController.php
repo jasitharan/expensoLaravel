@@ -139,6 +139,7 @@ class EditController extends Controller
  
     public function editPendingExpense(Request $request)
     {
+        
 
         $request->validate([
             'status' => 'required',
@@ -156,6 +157,34 @@ class EditController extends Controller
         );
         
 
+        $settings = Setting::first();
+        $SERVER_API_KEY = $settings->fcm_key;
+
+        $data = [
+            "to" => "/topics/all",
+            "notification" => [
+                "title" => $pending_expense->expenseFor,
+                "body" => $pending_expense->status,
+                "sound" => "default"
+            ]
+        ];
+        $dataString = json_encode($data);
+
+        $headers = [
+            'Authorization: key=' . $SERVER_API_KEY,
+            'Content-Type: application/json',
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, 'https://fcm.googleapis.com/fcm/send');
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
+
+        $response = curl_exec($ch);
         
         return redirect('pending_expenses/')->with('success', 'Updated Successfully');
     }

@@ -102,8 +102,8 @@ function submitEntries() {
 }
  
 
-function statusUpdate() {
-  document.forms['status-update-form'].submit();
+function statusUpdate(formName) {
+  document.forms[formName].submit();
 }
   
  

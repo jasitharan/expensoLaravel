@@ -62,7 +62,7 @@
             <select class="form-select" aria-label="Default select example" id='user_id' name="user_id">
                           @if (count($users) > 0)
               @foreach ($users as $user)
-              @if (($expense_type->expType == $expense->expenseType_name))
+              @if (($user->id == $expense->user_id))
               <option selected value="{{ $user->id }}">{{ $user->name }}</option>
               @else
               <option  value="{{ $user->id }}">{{ $user->name }}</option>

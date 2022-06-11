@@ -18,6 +18,17 @@
           </div>
       </div>
     </div>
+    
+    {{-- Image --}}
+         
+          <div class="mt-3 mb-4">
+              <h5 class="card-title mb-3">Image</h5>
+              <input class="form-control" type="file" id="url_image" name="'{{ $expType->url_image }}'">
+              <div id="url_imageHelp" class="form-text">
+                  insert the image
+                 </div>
+                 <img height=60px width=60px src='{{ $expType->url_image }}' class="rounded float-left" alt="expType_image">  
+            </div>
 
     <div>
       <h5 class="card-title mt-4">Expense Cost Limit</h5>
