@@ -63,7 +63,7 @@
   <option  value="financial_manager">Financial Manager</option>
 </select>
 
-<div id="newsHelp" class="form-text">
+<div id="exHelp" class="form-text">
   select role
  </div>
 </div>

@@ -41,7 +41,7 @@
               <div id="url_imageHelp" class="form-text">
                   insert the image
                  </div>
-                 <img height=60px width=60px src='{{ $user->url_image }}' class="rounded float-left" alt="news_image">  
+                 <img height=60px width=60px src='{{ $user->url_image }}' class="rounded float-left" alt="user_image">  
             </div>
             
        
@@ -55,7 +55,7 @@
             <option {{ $user->role == 'financial_manager' ? "selected" : "" }} value="financial_manager">Financial Manager</option>
 </select>
 
-<div id="newsHelp" class="form-text">
+<div id="exHelp" class="form-text">
   select role
  </div>
 </div>
