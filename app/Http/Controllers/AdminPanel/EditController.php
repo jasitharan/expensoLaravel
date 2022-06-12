@@ -73,7 +73,28 @@ class EditController extends Controller
         $fields = $request->validate([
             'expType' => 'unique:expense_types,expType,'.$id,
             'expCostLimit' => 'numeric|between:0,999999999999.9999',
+            'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000'
         ]);
+        
+        if ($request->hasFile('url_image')) {
+
+            if ($user->url_image != null) {
+
+                if ($user->url_image != Storage::url('images/expense_type_images/noimage.jpg')) {
+                    // Need to delete
+                    Storage::delete(strstr($user->url_image, "/images"));
+                }
+            }
+
+            // Upload image
+            $path = Storage::disk('public')->put('images/expense_type_images', $request->url_image);
+        } 
+
+        if (empty($path) ) {
+            $url_image  = $user->url_image;
+        } else {
+            $url_image = Storage::url($path);
+        }
 
 
 
@@ -86,7 +107,8 @@ class EditController extends Controller
         $expenseType->update([
             'expType' => $fields['expType'],
             'expCostLimit' => $fields['expCostLimit'],
-            'modifedBy' => $modifiedBy
+            'modifedBy' => $modifiedBy,
+            'url_image' => $url_image
         ]);
 
 
