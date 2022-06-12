@@ -150,7 +150,7 @@ class ExpenseController extends Controller
         $month = now()->format('m');
         
     
-        $expensesForMonth = Expense::where('user_id', $user_id)->whereBetween('createdDate', [$year.'-01-01', $year.'-12-01'])->where('status', 'Approved')->get(['createdDate','expenseCost']);
+        $expensesForMonth = Expense::where('user_id', $user_id)->whereBetween('createdDate', [$year.'-01-01', $year.'-12-31'])->where('status', 'Approved')->get(['createdDate','expenseCost']);
         
         $expensesForWeek = Expense::where('user_id', $user_id)->whereBetween('createdDate', [$year.'-' .$month .'-01', $year.'-' .$month . '-31'])
         ->where('status', 'Approved')->get(['createdDate','expenseCost']);

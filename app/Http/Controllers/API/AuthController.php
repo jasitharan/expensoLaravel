@@ -19,6 +19,8 @@ class AuthController extends Controller
         $fields = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
+            'dob' => 'date',
+            'phoneNumber' => 'string|size:10',
             'password' => 'required|string|confirmed',
             'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000'
         ]);
@@ -33,6 +35,8 @@ class AuthController extends Controller
         $user = User::create([
             'name' => $fields['name'],
             'email' => $fields['email'],
+            'dob' => $fields['dob'] ?? null,
+            'phoneNumber' => $fields['phoneNumber'] ?? null,
             'password' => bcrypt($fields['password']),
             'url_image' => Storage::url($path)
         ]);
@@ -96,6 +100,7 @@ class AuthController extends Controller
             $field = $request->validate([
                 'name' => 'string',
                 'email' => 'unique:users,email,' . $user->id,
+                'phoneNumber' => 'string|min:10,max:10',
                 'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000'
             ]);
         } catch (Throwable $e) {
@@ -108,7 +113,7 @@ class AuthController extends Controller
 
         $updateArr = [];
 
-        if ($request->hasAny(['name', 'email', 'url_image'])) {
+        if ($request->hasAny(['name', 'email', 'url_image','phoneNumber'])) {
             if ($request->filled('name')) {
                 if ($field['name']) {
                     $updateArr['name'] = $field['name'];
@@ -117,6 +122,11 @@ class AuthController extends Controller
             if ($request->filled('email')) {
                 if ($field['email'])
                     $updateArr['email'] = $field['email'];
+            }
+
+            if ($request->filled('phoneNumber')) {
+                if ($field['phoneNumber'])
+                    $updateArr['phoneNumber'] = $field['phoneNumber'];
             }
 
 
