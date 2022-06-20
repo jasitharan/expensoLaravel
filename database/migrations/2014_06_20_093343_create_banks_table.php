@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('branch');
             $table->string('name');
-            $table->string('number');
+            $table->string('number')->unique();
             $table->timestamps();
         });
     }

@@ -27,7 +27,8 @@ class User extends Authenticatable
         'company_id',
         'password',
         'phoneNumber',
-        'address_id'
+        'address_id',
+        'bank_id'
     ];
 
     /**
@@ -64,7 +65,23 @@ class User extends Authenticatable
  
     }
     
-    protected $appends = ['company_name'];
+    public function getBankAttribute()
+    {
+       if (!empty($this->bank_id)) {
+           return Bank::find($this->bank_id);
+       }
+ 
+    }
+    
+    public function getAddressAttribute()
+    {
+       if (!empty($this->address_id)) {
+           return Address::find($this->address_id);
+       }
+ 
+    }
+    
+    protected $appends = ['company_name','bank','address'];
 
     public function sendPasswordResetNotification($token)
     {

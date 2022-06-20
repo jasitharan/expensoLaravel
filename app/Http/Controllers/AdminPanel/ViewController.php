@@ -81,7 +81,7 @@ class ViewController extends Controller
 
         $limit = ShowEntry::first()->companies;
 
-        $companies = Company::sortable(['name'])->paginate($limit);
+        $companies = Company::where('name','!=','all')->sortable(['name'])->paginate($limit);
 
 
         if ($request->hasAny('search')) {
