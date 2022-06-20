@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminPanel\UtilController;
 use App\Models\ExpenseType;
 use App\Models\Expense;
 use App\Models\Company;
+use App\Models\Address;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -90,13 +91,25 @@ class CreateController extends Controller
  
  
          $fields =  $request->validate([
-             'name' => 'required|unique:companies'
+             'name' => 'required|unique:companies',
+             'address' => 'required|string',
+             'city' => 'required|string',
+             'province' => 'required|string',
+             'country' => 'required|string'
          ]);
          
+         
+         $address = Address::create([
+                'address' => $fields['address'],
+                'city' => $fields['city'],
+                'province' => $fields['province'],
+                'country' => $fields['country']
+            ]);
  
  
           Company::create([
              'name' => $fields['name'],
+             'address_id' => $address->id
          ]);
  
          return redirect('/companies/create')->with('success', 'Company Created');

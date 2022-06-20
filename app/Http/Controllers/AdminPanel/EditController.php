@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ExpenseType;
 use App\Models\User;
 use App\Models\Expense;
+use App\Models\Address;
 use App\Models\Company;
 use App\Models\Setting;
 use App\Models\ShowEntry;
@@ -72,12 +73,25 @@ class EditController extends Controller
     {
 
         $fields = $request->validate([
-            'name' => 'unique:companies,name,'.$id
+            'name' => 'unique:companies,name,'.$id,
+            'address' => 'required|string',
+            'city' => 'required|string',
+            'province' => 'required|string',
+            'country' => 'required|string'
         ]);
        
-
+        
 
         $company = Company::find($id);
+        
+        $address = Address::find($company->address_id);
+        
+        $address->update([
+            'address' => $fields['address'],
+            'city' => $fields['city'],
+            'province' => $fields['province'],
+            'country' => $fields['country']
+        ]);
 
 
 

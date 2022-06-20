@@ -45,6 +45,9 @@
                     <th>
                       <div >@sortablelink('name', 'Name  ')</div>
                       </th>
+                      
+                      
+                    <th>Address</th>  
                 
                     <th>@sortablelink('created_at', 'Created  ')</th>
                   
@@ -58,6 +61,7 @@
                  <tr class="align-middle">
                 
                     <td>{{ $company->name }}</td>
+                    <td>{{ $company->address->address }}, {{ $company->address->city }}</td>
                     <td>{{ $company->created_at }}</td>
                    
                     <td>
