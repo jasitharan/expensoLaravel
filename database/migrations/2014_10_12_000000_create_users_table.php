@@ -24,9 +24,9 @@ return new class extends Migration
             $table->string('password');
             $table->enum('role', ['employee', 'admin','supervisor','financial_manager'])->default('employee');
             $table->unsignedBigInteger('address_id')->nullable();
-            $table->foreign('address_id')->references('id')->on('addresses') ->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('address_id')->references('id')->on('addresses') ->onUpdate('set null')->onDelete('set null');
             $table->unsignedBigInteger('bank_id')->nullable();
-            $table->foreign('bank_id')->references('id')->on('banks')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('bank_id')->references('id')->on('banks')->onUpdate('set null')->onDelete('set null');
             $table->unsignedBigInteger('company_id');
             $table->foreign('company_id')->references('id')->on('companies')->onUpdate('cascade')->onDelete('cascade');
             $table->rememberToken();
