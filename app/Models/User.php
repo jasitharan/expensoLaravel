@@ -54,6 +54,15 @@ class User extends Authenticatable
         'email',
     ];
     
+    
+    public function getCompanyNameAttribute()
+    {
+       if (!empty($this->company_id)) {
+           return Company::find($this->company_id)->name;
+       }
+ 
+    }
+    
     protected $appends = ['company_name'];
 
     public function sendPasswordResetNotification($token)

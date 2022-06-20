@@ -52,6 +52,23 @@
                  </div>
             </div>
             
+            
+            {{-- Companies --}}
+         <div class="mt-3">
+              <h5 class="card-title mb-3">Company</h5>
+            <select class="form-select" aria-label="Default select example" name="company_id">
+              @if (count($companies) > 0)
+              @foreach ($companies as $company)
+              <option  value="{{ $company->id }}">{{ $company->name }}</option>
+              @endforeach
+              @endif
+            </select>
+
+            <div id="companyHelp" class="form-text">
+              select company
+             </div>
+         </div>
+            
        
             <div class="mt-3">
               <h5 class="card-title mb-3">Role</h5>

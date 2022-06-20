@@ -41,6 +41,7 @@
                     <th>@sortablelink('name', 'Name  ')</th>
                     <th>Email</th>
                     <th>@sortablelink('role', 'Role  ')</th>
+                    <th>@sortablelink('company_name', 'Company  ')</th>
                     <th>@sortablelink('created_at', 'Created  ')</th>
                     <th>Actions</th>
                 </tr>
@@ -56,6 +57,7 @@
                     <td>{{ $u->name }}</td>       
                     <td>{{ $u->email }}</td>
                     <td>{{ $u->role }}</td>
+                    <td>{{ $u->company_name }}</td>
                     <td>{{ $u->created_at }}</td>
                    
                     <td>

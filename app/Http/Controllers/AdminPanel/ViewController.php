@@ -57,7 +57,8 @@ class ViewController extends Controller
       public function getCreateUser()
       {
           $data = array(
-              'users' => User::all()
+              'users' => User::all(),
+              'companies' => Company::all()
           );
           return view('users.create_users')->with($data);
       }
@@ -66,6 +67,7 @@ class ViewController extends Controller
       {
           $data = array(
               'user' => User::where('id', $request->id)->first(),
+              'companies' => Company::all()
           );;
   
           return view('users.edit_users')->with($data);
