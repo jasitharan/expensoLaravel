@@ -16,6 +16,8 @@ use Throwable;
 
 class AuthController extends Controller
 {
+      
+   
     public function register(Request $request)
     {
         
@@ -157,17 +159,39 @@ class AuthController extends Controller
             ]);
             
             if (!empty($user->bank_id)) {
-                $field3 = $request->validate([
+                $request->validate([
                     'bank_branch' => 'string',
                     'bank_name' => 'string',
-                    'bank_number' => 'digits_between:5,20|unique:banks,number'.Bank::where('id',$user->bank_id)->number
+                    'bank_number' => 'digits_between:5,20|unique:banks,number,'.$user->bank_id
                 ]);
+                
+                $field3 = [];
+                
+                if (!empty($request->input('bank_number'))) {
+                    $field3['number'] = $request->input('bank_number');
+                }
+                
+                if (!empty($request->input('bank_name'))) {
+                    $field3['name'] = $request->input('bank_name');
+                }
+                
+                if (!empty($request->input('bank_branch'))) {
+                    $field3['branch'] = $request->input('bank_branch');
+                }
+                
             } else {
-                $field3 = $request->validate([
-                    'bank_branch' => 'string',
-                    'bank_name' => 'string',
-                    'bank_number' => 'digits_between:5,20|unique:banks,number'
-                ]);
+                
+                if (!empty($request->input('bank_number')) || !empty($request->input('bank_name')) || !empty($request->input('bank_branch'))) {
+                    $field3 = $request->validate([
+                        'bank_branch' => 'required|string',
+                        'bank_name' => 'required|string',
+                        'bank_number' => 'required|digits_between:5,20|unique:banks,number'
+                    ]);
+                    
+                
+                }
+                
+               
             }
             
           
@@ -205,6 +229,7 @@ class AuthController extends Controller
         Address::where('id',$user->address_id)->update($field2);
         
         if (!empty($user->bank_id)) {
+
              Bank::where('id',$user->bank_id)->update($field3);
         } else {
             if (!empty($request->input('bank_number'))) {
@@ -232,4 +257,7 @@ class AuthController extends Controller
             "message" => "authenticated."
         ];
     }
+    
+    
+  
 }
