@@ -14,9 +14,18 @@ class CompanyTableSeeder extends Seeder
      */
     public function run()
     {
+        
+        $address = \App\Models\Address::create([
+            "address" => 'araly north',
+            "city" => 'jaffna',
+            "province" => 'northern',
+            "country" => 'srilanka'
+        ]);
+        
         \App\Models\Company::create([
             "id" => 1,
-            "name" => 'all'
+            "name" => 'all',
+            "address_id" => $address->id
         ]);
     }
 }

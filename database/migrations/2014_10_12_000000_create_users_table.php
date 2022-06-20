@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->date('dob')->nullable();
             $table->string('phoneNumber',10)->nullable();
+            $table->unsignedBigInteger('address_id')->nullable();
+            $table->foreign('address_id')->references('id')->on('addresses') ->onUpdate('cascade')->onDelete('cascade');
+            $table->unsignedBigInteger('bank_id')->nullable();
+            $table->foreign('bank_id')->references('id')->on('banks')->onUpdate('cascade')->onDelete('cascade');
             $table->string('url_image');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
