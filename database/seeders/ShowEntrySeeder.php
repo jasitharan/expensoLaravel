@@ -16,7 +16,8 @@ class ShowEntrySeeder extends Seeder
         \App\Models\ShowEntry::create([
             "expense_types" => 10,
             "expenses" => 10,
-            "users" => 10
+            "users" => 10,
+            'companies' => 10,
         ]);
     }
 }

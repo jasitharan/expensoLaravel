@@ -40,6 +40,12 @@ Route::group(['middleware' => 'check_admin'], function () {
     Route::get('/expenses/create', [ViewController::class, 'getCreateExpense']);
     Route::get('/expenses/{id}/edit', [ViewController::class, 'getEditExpense']);
     Route::get('/pending_expenses', [ViewController::class, 'getPendingExpenseList']);
+    
+    
+    //Companies
+    Route::get('/companies', [ViewController::class, 'getCompanyList']);
+    Route::get('/companies/create', [ViewController::class, 'getCreateCompany']);
+    Route::get('/companies/{id}/edit', [ViewController::class, 'getEditCompany']);
 
     //Expense types
     Route::get('/expense_types', [ViewController::class, 'getExpenseTypeList']);
@@ -66,6 +72,12 @@ Route::group(['middleware' => 'check_admin'], function () {
     Route::post('/expense_types', [CreateController::class, 'createExpenseType']);
     Route::put('/expense_types/{id}', [EditController::class, 'editExpenseType']);
     Route::delete('/expense_types/{id}', [DeleteController::class, 'deleteExpenseType']);
+    
+    //Expense types
+    Route::post('/companies', [CreateController::class, 'createCompany']);
+    Route::put('/companies/{id}', [EditController::class, 'editCompany']);
+    Route::delete('/companies/{id}', [DeleteController::class, 'deleteCompany']);
+
 
     //Expense
     Route::post('/expenses', [CreateController::class, 'createExpense']);

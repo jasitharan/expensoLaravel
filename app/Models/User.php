@@ -24,6 +24,7 @@ class User extends Authenticatable
         'role',
         'url_image',
         'email',
+        'company_id',
         'password',
         'phoneNumber'
     ];
@@ -52,6 +53,8 @@ class User extends Authenticatable
         'created_at',
         'email',
     ];
+    
+    protected $appends = ['company_name'];
 
     public function sendPasswordResetNotification($token)
     {

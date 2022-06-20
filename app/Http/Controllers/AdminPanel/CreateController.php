@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\AdminPanel\UtilController;
 use App\Models\ExpenseType;
 use App\Models\Expense;
+use App\Models\Company;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -24,6 +25,7 @@ class CreateController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string',
             'role' => 'required',
+            'company_id' => 'required|exists:companies,id',
             'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000'
         ]);
 
@@ -38,6 +40,7 @@ class CreateController extends Controller
             'name' => $fields['name'],
             'email' => $fields['email'],
             'role' => $fields['role'],
+            'company_id' => $fields['company_id'],
             'password' => bcrypt($fields['password']),
             'url_image' => Storage::url($path)
         ]);
@@ -79,6 +82,25 @@ class CreateController extends Controller
 
         return redirect('/expense_types/create')->with('success', 'Expense Type Created');
     }
+    
+    
+     // Companies
+     public function createCompany(Request $request)
+     {
+ 
+ 
+         $fields =  $request->validate([
+             'name' => 'required|unique:companies'
+         ]);
+         
+ 
+ 
+          Company::create([
+             'name' => $fields['name'],
+         ]);
+ 
+         return redirect('/companies/create')->with('success', 'Company Created');
+     }
 
     //Expense
     public function createExpense(Request $request)

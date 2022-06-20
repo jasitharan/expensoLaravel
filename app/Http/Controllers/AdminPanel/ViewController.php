@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\ExpenseType;
 use App\Models\Expense;
+use App\Models\Company;
 use App\Models\Setting;
 use App\Models\ShowEntry;
 use App\Models\User;
@@ -69,6 +70,44 @@ class ViewController extends Controller
   
           return view('users.edit_users')->with($data);
       }
+      
+      
+      // Companies
+      
+    public function getCompanyList(Request $request)
+    {
+
+        $limit = ShowEntry::first()->companies;
+
+        $companies = Company::sortable(['name'])->paginate($limit);
+
+
+        if ($request->hasAny('search')) {
+            $companies =  Company::where('name', 'like', '%' . $request->input('search') . '%')->paginate($limit);
+        }
+
+
+        $data = array(
+            'companies' => $companies,
+            'limit' => $limit
+        );
+        return view('companies.get_companies')->with($data);
+    }
+
+    public function getCreateCompany()
+    {
+        return view('companies.create_company');
+    }
+
+    public function getEditCompany(Request $request)
+    {
+
+        $data = array(
+            'company' => Company::find($request->id)
+        );;
+        return view('companies.edit_company')->with($data);
+    }
+
 
 
     // Expense Type

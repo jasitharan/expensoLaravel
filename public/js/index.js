@@ -78,6 +78,14 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.forms['expense_types-create-form'].submit();
  }
  
+ function createCompany() {
+  document.forms['companies-create-form'].submit();
+}
+
+function editCompany() {
+  document.forms['companies-edit-form'].submit();
+}
+ 
 
  
  function editExpenseType() {

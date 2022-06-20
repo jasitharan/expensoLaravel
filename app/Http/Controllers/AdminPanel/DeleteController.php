@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ExpenseType;
 use App\Models\User;
 use App\Models\Expense;
+use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -45,6 +46,17 @@ class DeleteController extends Controller
         $expense->delete();
 
         return redirect('expenses')->with('success', 'Expense Deleted Successfully');
+    }
+    
+    public function deleteCompany(Request $request)
+    {
+        $company = Company::find($request->id);
+
+
+      
+        $company->delete();
+
+        return redirect('companies')->with('success', 'Company Deleted Successfully');
     }
 
  

@@ -20,7 +20,8 @@ class AuthController extends Controller
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
             'dob' => 'date',
-            'phoneNumber' => 'string|size:10',
+            'company_id' => 'required|exists:companies,id',
+            'phoneNumber' => 'digits:9',
             'password' => 'required|string|confirmed',
             'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000'
         ]);
@@ -36,6 +37,7 @@ class AuthController extends Controller
             'name' => $fields['name'],
             'email' => $fields['email'],
             'dob' => $fields['dob'] ?? null,
+            'company_id' => $fields['company_id'],
             'phoneNumber' => $fields['phoneNumber'] ?? null,
             'password' => bcrypt($fields['password']),
             'url_image' => Storage::url($path)
@@ -113,7 +115,7 @@ class AuthController extends Controller
 
         $updateArr = [];
 
-        if ($request->hasAny(['name', 'email', 'url_image','phoneNumber'])) {
+        if ($request->hasAny(['name', 'email', 'url_image', 'phoneNumber'])) {
             if ($request->filled('name')) {
                 if ($field['name']) {
                     $updateArr['name'] = $field['name'];

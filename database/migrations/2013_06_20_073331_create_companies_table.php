@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('show_entries', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->id();
-            $table->integer('expense_types')->default(10);
-            $table->integer('expenses')->default(10);
-            $table->integer('users')->default(10);
-            $table->integer('companies')->default(10);
+            $table->string('name')->unique();
             $table->timestamps();
         });
     }
@@ -30,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('show_entries');
+        Schema::dropIfExists('companies');
     }
 };

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ExpenseType;
 use App\Models\User;
 use App\Models\Expense;
+use App\Models\Company;
 use App\Models\Setting;
 use App\Models\ShowEntry;
 use Illuminate\Http\Request;
@@ -63,6 +64,29 @@ class EditController extends Controller
         }
 
         return redirect('users/' . $request->id . '/edit')->with('success', 'Updated Successfully');
+    }
+    
+    
+    //Company
+    public function editCompany(Request $request, $id)
+    {
+
+        $fields = $request->validate([
+            'name' => 'unique:companies,name,'.$id
+        ]);
+       
+
+
+        $company = Company::find($id);
+
+
+
+        $company->update([
+            'name' => $fields['name']
+        ]);
+
+
+        return redirect('companies/' . $request->id . '/edit')->with('success', 'Updated Successfully');
     }
 
 

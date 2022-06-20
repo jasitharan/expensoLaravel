@@ -21,8 +21,8 @@ class SettingsTableSeeder extends Seeder
             "mail_mailer" => "smtp",
             "mail_host" => "smtp.mailtrap.io",
             'mail_port' => '2525',
-            "mail_username" => '0d923775ddf42b',
-            "mail_password" => '9d47958d54b7ab',
+            "mail_username" => '1aecbe4eb00cec',
+            "mail_password" => '58e642f8ac23e9',
             'mail_sender_email' => 'admin@mail.com',
             'mail_sender_name' => 'flutter expenso app',
             'mail_encryption' => 'tls'

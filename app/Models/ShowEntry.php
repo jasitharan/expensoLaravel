@@ -13,5 +13,6 @@ class ShowEntry extends Model
         'expense_types',
         'expenses',
         'users',
+        'companies'
     ];
 }
