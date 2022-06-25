@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->date('createdDate')->nullable();
             $table->string('receiptPath')->nullable();
-            $table->decimal('expenseCost',16,4);
+            $table->decimal('expenseCost',16,2);
             $table->string('expenseFor');
             $table->enum('status', ['Unknown', 'Approved', 'Rejected'])->default('Unknown');
             $table->string('otherExpense')->nullable();
