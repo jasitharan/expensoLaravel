@@ -81,7 +81,7 @@ class User extends Authenticatable implements MustVerifyEmail
     
     public function getIsVerifiedAttribute()
     {
-        if (!empty($this->email_verified_at)) {
+        if (empty($this->email_verified_at)) {
             return false;
         }
         
