@@ -10,7 +10,7 @@ use App\Notifications\ResetPasswordNotification;
 use Laravel\Sanctum\HasApiTokens;
 use Kyslik\ColumnSortable\Sortable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable, Sortable;
 
@@ -28,7 +28,8 @@ class User extends Authenticatable
         'password',
         'phoneNumber',
         'address_id',
-        'bank_id'
+        'bank_id',
+        'email_verified_at'
     ];
 
     /**
@@ -53,35 +54,32 @@ class User extends Authenticatable
     public $sortable = [
         'name',
         'created_at',
-        'email',
+        'email'
     ];
-    
-    
+
+
     public function getCompanyNameAttribute()
     {
-       if (!empty($this->company_id)) {
-           return Company::find($this->company_id)->name;
-       }
- 
+        if (!empty($this->company_id)) {
+            return Company::find($this->company_id)->name;
+        }
     }
-    
+
     public function getBankAttribute()
     {
-       if (!empty($this->bank_id)) {
-           return Bank::find($this->bank_id);
-       }
- 
+        if (!empty($this->bank_id)) {
+            return Bank::find($this->bank_id);
+        }
     }
-    
+
     public function getAddressAttribute()
     {
-       if (!empty($this->address_id)) {
-           return Address::find($this->address_id);
-       }
- 
+        if (!empty($this->address_id)) {
+            return Address::find($this->address_id);
+        }
     }
-    
-    protected $appends = ['company_name','bank','address'];
+
+    protected $appends = ['company_name', 'bank', 'address'];
 
     public function sendPasswordResetNotification($token)
     {

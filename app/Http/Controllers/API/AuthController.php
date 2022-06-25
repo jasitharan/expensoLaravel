@@ -16,11 +16,11 @@ use Throwable;
 
 class AuthController extends Controller
 {
-      
-   
+
+
     public function register(Request $request)
     {
-        
+
         $fields = $request->validate([
             'name' => 'required|string',
             'email' => 'required|email|unique:users,email',
@@ -45,32 +45,32 @@ class AuthController extends Controller
         } else {
             $path = 'images/user_images/noimage.jpg';
         }
-        
+
         $address = Address::create([
             'address' => $fields['address'],
             'city' => $fields['city'],
             'province' => $fields['province'],
             'country' => $fields['country']
         ]);
-        
+
         $bank;
-        
+
         if (!empty(request('bank_number'))) {
-        
-            
-            $fields2 = $request->validate([  
-              'bank_branch' => 'required|string',
-              'bank_name' => 'required|string',
-              'bank_number' => 'digits_between:5,20|unique:banks,number'
-           ]);
+
+
+            $fields2 = $request->validate([
+                'bank_branch' => 'required|string',
+                'bank_name' => 'required|string',
+                'bank_number' => 'digits_between:5,20|unique:banks,number'
+            ]);
             $bank = Bank::create([
                 'number' => $fields2['bank_number'],
                 'branch' => $fields2['bank_branch'],
                 'name' => $fields2['bank_name']
             ]);
         }
-        
-   
+
+
 
         $user = User::create([
             'name' => $fields['name'],
@@ -138,8 +138,8 @@ class AuthController extends Controller
     {
 
         $user = request()->user();
-        
-    
+
+
 
         try {
             $field = $request->validate([
@@ -149,7 +149,7 @@ class AuthController extends Controller
                 'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000',
                 'dob' => 'date'
             ]);
-           
+
             $field2 = $request->validate([
                 'address' => 'string',
                 'city' => 'string',
@@ -157,80 +157,75 @@ class AuthController extends Controller
                 'province' => 'string',
                 'country' => 'string',
             ]);
-            
+
             if (!empty($user->bank_id)) {
                 $request->validate([
                     'bank_branch' => 'string',
                     'bank_name' => 'string',
-                    'bank_number' => 'digits_between:5,20|unique:banks,number,'.$user->bank_id
+                    'bank_number' => 'digits_between:5,20|unique:banks,number,' . $user->bank_id
                 ]);
-                
+
                 $field3 = [];
-                
+
                 if (!empty($request->input('bank_number'))) {
                     $field3['number'] = $request->input('bank_number');
                 }
-                
+
                 if (!empty($request->input('bank_name'))) {
                     $field3['name'] = $request->input('bank_name');
                 }
-                
+
                 if (!empty($request->input('bank_branch'))) {
                     $field3['branch'] = $request->input('bank_branch');
                 }
-                
             } else {
-                
+
                 if (!empty($request->input('bank_number')) || !empty($request->input('bank_name')) || !empty($request->input('bank_branch'))) {
                     $field3 = $request->validate([
                         'bank_branch' => 'required|string',
                         'bank_name' => 'required|string',
                         'bank_number' => 'required|digits_between:5,20|unique:banks,number'
                     ]);
-                    
-                
                 }
-                
-               
             }
-            
-          
-            
         } catch (Throwable $e) {
             return response([
                 "message" => 'Something went wrong'
             ], 500);
         }
-        
 
 
-            if ($request->hasAny('url_image')) {
 
-                if ($user->url_image != null) {
-                    if ($user->url_image !=  Storage::url('images/user_images/noimage.jpg')) {
-                        // return $category->url_image;
-                        Storage::delete(strstr($user->url_image, "/images"));
-                    }
+        if ($request->hasAny('url_image')) {
+
+            if ($user->url_image != null) {
+                if ($user->url_image !=  Storage::url('images/user_images/noimage.jpg')) {
+                    // return $category->url_image;
+                    Storage::delete(strstr($user->url_image, "/images"));
                 }
-
-
-                if ($request->hasFile('url_image')) {
-                    // Upload image
-                    $path = Storage::disk('public')->put('images/user_images', $request->url_image);
-                } else {
-                    $path = 'images/user_images/noimage.jpg';
-                }
-                
-                $field['url_image'] = Storage::url($path);
-
             }
-            
-            
-        Address::where('id',$user->address_id)->update($field2);
-        
+
+
+            if ($request->hasFile('url_image')) {
+                // Upload image
+                $path = Storage::disk('public')->put('images/user_images', $request->url_image);
+            } else {
+                $path = 'images/user_images/noimage.jpg';
+            }
+
+            $field['url_image'] = Storage::url($path);
+        }
+
+        if ($request->hasAny('email')) {
+            $field['email_verified_at'] = null;
+        }
+
+
+        Address::where('id', $user->address_id)->update($field2);
+
         if (!empty($user->bank_id)) {
 
-             Bank::where('id',$user->bank_id)->update($field3);
+            Bank::where('id', $user->bank_id)->update($field3);
         } else {
             if (!empty($request->input('bank_number'))) {
                 $bank = Bank::create([
@@ -238,13 +233,13 @@ class AuthController extends Controller
                     'branch' => $field3['bank_branch'],
                     'name' => $field3['bank_name']
                 ]);
-                
+
                 $field['bank_id'] = $bank->id;
             }
-          
         }
-  
+
         $user->update($field);
+
 
         return [
             "data" => $user
@@ -257,7 +252,4 @@ class AuthController extends Controller
             "message" => "authenticated."
         ];
     }
-    
-    
-  
 }
