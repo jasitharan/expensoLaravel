@@ -78,8 +78,17 @@ class User extends Authenticatable implements MustVerifyEmail
             return Address::find($this->address_id);
         }
     }
+    
+    public function getIsVerifiedAttribute()
+    {
+        if (!empty($this->email_verified_at)) {
+            return false;
+        }
+        
+        return true;
+    }
 
-    protected $appends = ['company_name', 'bank', 'address'];
+    protected $appends = ['company_name', 'bank', 'address','isVerified'];
 
     public function sendPasswordResetNotification($token)
     {
