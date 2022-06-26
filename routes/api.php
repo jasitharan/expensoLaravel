@@ -24,6 +24,7 @@ use App\Http\Controllers\API\CompanyController;
 //Users
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 
 Route::post('/forgot-password', [ForgotPasswordController::class, 'forgot']);
@@ -43,7 +44,6 @@ Route::group(['middleware' => ['auth:sanctum', 'IsVerified']], function () {
 
 
     Route::post('/updateDetail', [AuthController::class, 'updateDetail']);
-    Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/check_user', [AuthController::class, 'checkUser']);
     
     
