@@ -216,7 +216,7 @@ class AuthController extends Controller
             $field['url_image'] = Storage::url($path);
         }
 
-        if ($request->hasAny('email')) {
+        if ($request->hasAny('email') && $user->email != $request->get('email')) {
             $field['email_verified_at'] = null;
         }
 
@@ -240,10 +240,14 @@ class AuthController extends Controller
 
         $user->update($field);
 
+        
+    
 
-        return [
-            "data" => $user
+      $response = [
+            "user" => $user
         ];
+        
+        return response($response, 200);
     }
 
     public function checkUser(Request $request)

@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('url_image');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['employee', 'admin','supervisor','financial_manager'])->default('employee');
+            $table->enum('role', ['employee', 'admin'])->default('employee');
             $table->unsignedBigInteger('address_id')->nullable();
             $table->foreign('address_id')->references('id')->on('addresses') ->onUpdate('set null')->onDelete('set null');
             $table->unsignedBigInteger('bank_id')->nullable();
