@@ -32,6 +32,10 @@ Route::post('/reset-password', [ForgotPasswordController::class, 'reset']);
 Route::post('email/verification-notification', [VerificationController::class, 'sendVerificationEmail'])->middleware('auth:sanctum');
 Route::get('verify-email/{id}/{hash}', [VerificationController::class, 'verify'])->name('verification.verify')->middleware('auth:sanctum');
 
+// Companies
+Route::get('/companies', [CompanyController::class, 'index']);
+
+
 
 //Protected Routes
 Route::group(['middleware' => ['auth:sanctum', 'IsVerified']], function () {
@@ -42,9 +46,7 @@ Route::group(['middleware' => ['auth:sanctum', 'IsVerified']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/check_user', [AuthController::class, 'checkUser']);
     
-    // Companies
-    Route::get('/companies', [CompanyController::class, 'index']);
-
+    
     // Expense Type
     Route::get('/expense_types', [ExpenseTypeController::class, 'index']);
     Route::get('/expense_types/{id}', [ExpenseTypeController::class, 'show']);
