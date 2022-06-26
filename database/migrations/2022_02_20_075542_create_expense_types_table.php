@@ -17,9 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('expType')->unique();
             $table->string('url_image');
-            $table->date('createdDate');
-            $table->string('modifedBy');
-            $table->string('updatedDate');
+            $table->date('createdDate')->default('2022/06/26');
+            $table->string('modifedBy')->default('admin');
+            $table->string('updatedDate')->default('2022/06/26');
             $table->decimal('expCostLimit',16,2);
             $table->timestamps();
         });

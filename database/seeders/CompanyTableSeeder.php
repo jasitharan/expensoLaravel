@@ -27,5 +27,18 @@ class CompanyTableSeeder extends Seeder
             "name" => 'all',
             "address_id" => $address->id
         ]);
+        
+        $address2 = \App\Models\Address::create([
+            "address" => 'Wellawatta',
+            "city" => 'Colombo',
+            "province" => 'Western',
+            "country" => 'srilanka'
+        ]);
+        
+        \App\Models\Company::create([
+            "id" => 2,
+            "name" => 'Company 1',
+            "address_id" => $address2->id
+        ]);
     }
 }
