@@ -7,6 +7,7 @@ use App\Http\Controllers\API\VerificationController;
 use App\Http\Controllers\API\ExpenseTypeController;
 use App\Http\Controllers\API\ExpenseController;
 use App\Http\Controllers\API\ForgotPasswordController;
+use App\Http\Controllers\API\CompanyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,9 @@ Route::group(['middleware' => ['auth:sanctum', 'IsVerified']], function () {
     Route::post('/updateDetail', [AuthController::class, 'updateDetail']);
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/check_user', [AuthController::class, 'checkUser']);
+    
+    // Companies
+    Route::get('/companies', [CompanyController::class, 'index']);
 
     // Expense Type
     Route::get('/expense_types', [ExpenseTypeController::class, 'index']);
