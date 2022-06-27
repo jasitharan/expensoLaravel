@@ -20,7 +20,7 @@ class ExpenseTypeController extends Controller
     {
         $request->validate([
             'expType' => 'required',
-            'expCostLimit' => 'required',
+            'expCostLimit' => 'required|numeric',
             'url_image' => 'image||nullable|mimes:jpeg,jpg,png,gif|max:10000',
         ]);
 

@@ -122,17 +122,9 @@ class CreateController extends Controller
         $fields =  $request->validate([
             'user_id' => 'required',
             'createdDate' => 'required|date',
-            'receiptPath' => 'string',
+            'status' => 'required',
             'expenseCost' => 'required|numeric|between:0,999999999999.9999',
             'expenseFor' => 'required|string',
-            'otherExpense' => 'string',
-            'rentalAgency' => 'string',
-            'status' => 'required',
-            'carClass' => 'string',
-            'ticketNo' => 'string',
-            'airline' => 'string',
-            'daysInHotel' => 'integer',
-            'hotelName' => 'string',
             'expenseType_id' => 'required|exists:expense_types,id'
         ]);
 
@@ -140,17 +132,9 @@ class CreateController extends Controller
          Expense::create([
             'user_id' => $fields['user_id'],
             'createdDate' => $fields['createdDate'],
-            'receiptPath' =>  $fields['receiptPath'] ?? null,
             'expenseCost' => $fields['expenseCost'],
             'expenseFor' => $fields['expenseFor'],
             'status' => $fields['status'],
-            'otherExpense' => $fields['otherExpense'] ?? null,
-            'rentalAgency' => $fields['rentalAgency'] ?? null,
-            'carClass' => $fields['carClass'] ?? null,
-            'ticketNo' => $fields['ticketNo'] ?? null,
-            'airline' => $fields['airline'] ?? null,
-            'daysInHotel' => $fields['daysInHotel'] ?? null,
-            'hotelName' => $fields['hotelName'] ?? null,
             'expenseType_id' => $fields['expenseType_id'],
         ]);
 

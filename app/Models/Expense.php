@@ -13,17 +13,9 @@ class Expense extends Model
 
     protected $fillable = [
         'createdDate',
-        'receiptPath',
         'expenseCost',
         'expenseFor',
-        'otherExpense',
-        'rentalAgency',
-        'carClass',
-        'ticketNo',
-        'airline',
-        'daysInHotel',
         'status',
-        'hotelName',
         'expenseType_id',
         'user_id'
     ];

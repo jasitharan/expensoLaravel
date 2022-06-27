@@ -76,8 +76,6 @@
   <option selected value="">Open this select roles</option>
   <option  value="admin">Admin</option>
   <option  value="employee">Employee</option>
-  <option  value="supervisor">Supervisor</option>
-  <option  value="financial_manager">Financial Manager</option>
 </select>
 
 <div id="exHelp" class="form-text">

@@ -73,8 +73,6 @@
             <option  value="">Open this select roles</option>
             <option {{ $user->role == 'admin' ? "selected" : "" }} value="admin">Admin</option>
             <option {{ $user->role == 'employee' ? "selected" : "" }}  value="employee">Employee</option>
-            <option {{ $user->role == 'supervisor' ? "selected" : "" }} value="supervisor">Supervisor</option>
-            <option {{ $user->role == 'financial_manager' ? "selected" : "" }} value="financial_manager">Financial Manager</option>
 </select>
 
 <div id="exHelp" class="form-text">

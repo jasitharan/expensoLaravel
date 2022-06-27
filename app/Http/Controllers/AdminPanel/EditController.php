@@ -160,17 +160,9 @@ class EditController extends Controller
         $fields =  $request->validate([
             'user_id' => 'required',
             'createdDate' => 'required|date',
-            'receiptPath' => 'string',
+            'status' => 'required',
             'expenseCost' => 'required|numeric|between:0,999999999999.9999',
             'expenseFor' => 'required|string',
-            'otherExpense' => 'string',
-            'rentalAgency' => 'string',
-            'status' => 'required',
-            'carClass' => 'string',
-            'ticketNo' => 'string',
-            'airline' => 'string',
-            'daysInHotel' => 'integer',
-            'hotelName' => 'string',
             'expenseType_id' => 'required|exists:expense_types,id'
         ]);
 
@@ -221,7 +213,7 @@ class EditController extends Controller
         $SERVER_API_KEY = $settings->fcm_key;
 
         $data = [
-            "to" => "/topics/all",
+            "to" => "/topics/".$pending_expense->user_id,
             "notification" => [
                 "title" => $pending_expense->expenseFor,
                 "body" => $pending_expense->status,
@@ -245,6 +237,7 @@ class EditController extends Controller
         curl_setopt($ch, CURLOPT_POSTFIELDS, $dataString);
 
         $response = curl_exec($ch);
+        
         
         return redirect('pending_expenses/')->with('success', 'Updated Successfully');
     }
