@@ -42,7 +42,6 @@ class ExpenseController extends Controller
                 'createdDate' => 'required|date',
                 'expenseCost' => 'required|numeric|between:0,999999999999.9999',
                 'expenseFor' => 'required|string',
-                'status' => 'required',
                 'expenseType_id' => 'required|exists:expense_types,id'
             ]);
         } catch (\Throwable $th) {
