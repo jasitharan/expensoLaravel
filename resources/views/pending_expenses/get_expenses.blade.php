@@ -53,7 +53,7 @@
                  @foreach ($expenses as $expense)
                  <tr class="align-middle">
                     <td>{{ $expense->user_name }}</td>
-                    <td>{{ $expense->expenseType_name }}</td>
+                    <td>{{ $expense->expenseType->expType }}</td>
                     <td>{{ $expense->expenseFor }}</td>
                     <td>{{ $expense->expenseCost }}</td>
                     <td>{{ $expense->createdDate }}</td>

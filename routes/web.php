@@ -24,16 +24,16 @@ Route::get('/login', [AdminAuthController::class, 'getLogin']);
 Route::post('/login', [AdminAuthController::class, 'doLogin']);
 Route::post('/logout', [AdminAuthController::class, 'logout']);
 
-Route::group(['middleware' => 'check_admin'], function () {
+Route::group(['middleware' => 'check_admin_financialManager'], function () {
     Route::get('/{name}', [ViewController::class, 'getDashBoard'])->where('name', '(dashboard)?');
 
 
     // Get Requests
 
      //Users
-     Route::get('/users', [ViewController::class, 'getUserList']);
-     Route::get('/users/create', [ViewController::class, 'getCreateUser']);
-     Route::get('/users/{id}/edit', [ViewController::class, 'getEditUser']);
+     Route::get('/users', [ViewController::class, 'getUserList'])->middleware('check_admin');
+     Route::get('/users/create', [ViewController::class, 'getCreateUser'])->middleware('check_admin');
+     Route::get('/users/{id}/edit', [ViewController::class, 'getEditUser'])->middleware('check_admin');
 
     //Expenses
     Route::get('/expenses', [ViewController::class, 'getExpenseList']);
@@ -57,16 +57,16 @@ Route::group(['middleware' => 'check_admin'], function () {
     Route::patch('/show_entries', [EditController::class, 'editShowEntry']);
 
     //Settings
-    Route::get('/settings/notification', [SettingsController::class, 'getNotificationSetting']);
-    Route::get('/settings/global', [SettingsController::class, 'getGlobalSetting']);
-    Route::get('/settings/mail', [SettingsController::class, 'getMailSetting']);
+    Route::get('/settings/notification', [SettingsController::class, 'getNotificationSetting'])->middleware('check_admin');
+    Route::get('/settings/global', [SettingsController::class, 'getGlobalSetting'])->middleware('check_admin');
+    Route::get('/settings/mail', [SettingsController::class, 'getMailSetting'])->middleware('check_admin');
 
 
 
     //User
-    Route::post('/users', [CreateController::class, 'createUser']);
-    Route::put('/users/{id}', [EditController::class, 'editUser']);
-    Route::delete('/users/{id}', [DeleteController::class, 'deleteUser']);
+    Route::post('/users', [CreateController::class, 'createUser'])->middleware('check_admin');
+    Route::put('/users/{id}', [EditController::class, 'editUser'])->middleware('check_admin');
+    Route::delete('/users/{id}', [DeleteController::class, 'deleteUser'])->middleware('check_admin');
 
     //Expense types
     Route::post('/expense_types', [CreateController::class, 'createExpenseType']);
@@ -88,7 +88,7 @@ Route::group(['middleware' => 'check_admin'], function () {
 
 
     Route::post('/send-notification', [NotificationController::class, 'sendNotification']);
-    Route::patch('/settings/global', [SettingsController::class, 'saveSettingGlobal']);
-    Route::patch('/settings/mail', [SettingsController::class, 'saveSettingMail']);
-    Route::patch('/settings/notification', [SettingsController::class, 'saveSettingNotification']);
+    Route::patch('/settings/global', [SettingsController::class, 'saveSettingGlobal'])->middleware('check_admin');
+    Route::patch('/settings/mail', [SettingsController::class, 'saveSettingMail'])->middleware('check_admin');
+    Route::patch('/settings/notification', [SettingsController::class, 'saveSettingNotification'])->middleware('check_admin');
 });
