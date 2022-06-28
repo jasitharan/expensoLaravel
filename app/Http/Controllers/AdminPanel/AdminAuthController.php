@@ -11,7 +11,7 @@ class AdminAuthController extends Controller
     public function getLogin(Request $request)
     {
 
-        if (auth()->check() && auth()->user()->role == 'admin') {
+        if (auth()->check() && (auth()->user()->role == 'admin' || auth()->user()->role == 'financial_manager' )) {
             return redirect('/');
         }
 
@@ -26,7 +26,8 @@ class AdminAuthController extends Controller
             'password' => 'required|string'
         ]);
 
-        if (Auth::attempt(['email' => $fields['email'], 'password' => $fields['password'], 'role' => 'admin'], $request->input('remember-me'))) {
+
+        if (Auth::attempt(['email' => $fields['email'], 'password' => $fields['password'], 'role' => ['admin','financial_manager']], $request->input('remember-me'))) {
             return redirect('/');
         } else {
             return redirect('login')->with('error', 'Please enter credentials correctly');
